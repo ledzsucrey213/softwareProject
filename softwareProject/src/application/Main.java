@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-        // Labels et champs de texte avec un style moderne et luxueux
         Label usernameLabel = new Label("Nom d'utilisateur:");
         usernameLabel.setFont(Font.font("Helvetica Neue", 18));
         usernameLabel.setTextFill(Color.web("#BDBDBD"));
@@ -39,11 +38,11 @@ public class Main extends Application {
         Button loginButton = new Button("Se connecter");
         loginButton.setStyle("-fx-background-color: #FFD700; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 25;");
         loginButton.setPrefHeight(45);
-        loginButton.setMaxWidth(Double.MAX_VALUE);  // S'adapte à la largeur de la fenêtre
+        loginButton.setMaxWidth(Double.MAX_VALUE);  
         loginButton.setOnMouseEntered(e -> loginButton.setStyle("-fx-background-color: #FFCC00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 25;"));
         loginButton.setOnMouseExited(e -> loginButton.setStyle("-fx-background-color: #FFD700; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 25;"));
 
-        // Action sur le bouton
+        
         loginButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
@@ -55,41 +54,41 @@ public class Main extends Application {
             }
         });
 
-        // Mise en page avec VBox et ajustements pour redimensionnement
-        VBox vbox = new VBox(20);  // Espacement entre les éléments
+        
+        VBox vbox = new VBox(20);  
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: linear-gradient(to top, #212121, #616161);");
         vbox.setPadding(new javafx.geometry.Insets(50, 30, 50, 30));
 
-        // Conteneur GridPane pour le texte et les champs de saisie
+       
         GridPane grid = new GridPane();
         grid.setVgap(15);
         grid.setHgap(10);
         grid.setPadding(new javafx.geometry.Insets(20, 20, 20, 20));
         grid.setStyle("-fx-background-color: transparent;");
 
-        // Définir la largeur des colonnes de manière flexible
+        
         ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(40); // La première colonne (labels)
+        column1.setPercentWidth(40); 
         ColumnConstraints column2 = new ColumnConstraints();
-        column2.setPercentWidth(60); // La deuxième colonne (champs de texte)
+        column2.setPercentWidth(60); 
         grid.getColumnConstraints().addAll(column1, column2);
 
-        // Ajouter les éléments dans le GridPane
+       
         grid.add(usernameLabel, 0, 0);
         grid.add(usernameField, 1, 0);
         grid.add(passwordLabel, 0, 1);
         grid.add(passwordField, 1, 1);
         grid.add(loginButton, 1, 2);
 
-        // Ajout de GridPane dans VBox pour une mise en page fluide
+        
         vbox.getChildren().add(grid);
 
-        // Définition de la scène avec un fond blanc et des dimensions plus grandes
-        Scene scene = new Scene(vbox, 600, 450);  // Taille augmentée ici
+        
+        Scene scene = new Scene(vbox, 600, 450);  
         scene.setFill(Color.WHITE);
 
-        // Ajouter une animation de fondu pour l'apparition de la fenêtre
+        
         PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
         pause.setOnFinished(e -> primaryStage.setOpacity(1));
         primaryStage.setOpacity(0);
@@ -97,10 +96,10 @@ public class Main extends Application {
 
         primaryStage.setTitle("Connexion");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(true);  // La fenêtre est redimensionnable
+        primaryStage.setResizable(true);  
         primaryStage.show();
 
-        // Ajouter une animation de transition au texte
+        
         usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 usernameField.setStyle("-fx-background-color: #333333; -fx-text-fill: white; -fx-border-radius: 25; -fx-border-color: #FFD700;");
@@ -119,7 +118,7 @@ public class Main extends Application {
     }
 
     private boolean authenticate(String username, String password) {
-        // Exemple de méthode d'authentification, remplacer par votre logique réelle
+        
         UserDaoMySQL userDao = new UserDaoMySQL();
         return userDao.verifyLogin(username, password);
     }
