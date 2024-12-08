@@ -6,6 +6,7 @@ import softwareProject.MySqlFactory;
 public class LoginService {
 
     private UserDaoMySql userDao;
+    private Application.Main application;
 
     // Constructor initializes the UserDaoMySql via MySqlFactory
     public LoginService() {
@@ -21,10 +22,12 @@ public class LoginService {
         try {
             // Attempt to load the user with the given username and password
             userDao.loadUser(userName, password);
+            //application.launch();
             return true; // Authentication successful
         } catch (Exception e) {
             // If loadUser fails (i.e., user does not exist or credentials don't match)
             System.out.println("Authentication failed: " + e.getMessage());
+            //application.authError();
             return false; // Authentication failed
         }
     }
