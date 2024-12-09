@@ -1,5 +1,8 @@
 package login.bl;
 
-public abstract class AbstractFactory {
+import login.dao.*;
 
+public abstract class AbstractFactory {
+	public abstract UserDaoMySql createUserDaoMySql();
+	
 }
