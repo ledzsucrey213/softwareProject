@@ -1,5 +1,5 @@
-package login.bl;
 
+<<<<<<< HEAD
 import login.dao.*;
 import login.ui.*;
 
@@ -43,3 +43,28 @@ public class LoginService {
         }
     }
 }
+=======
+import java.io.*;
+import java.util.*;
+
+/**
+ * 
+ */
+public class LoginService {
+
+    /**
+     * Default constructor
+     */
+    public LoginService() {
+    }
+
+    /**
+     * @param username 
+     * @param password
+     */
+    public void authenticate(void username, void password) {
+        // TODO implement here
+    }
+
+}
+>>>>>>> 10effe60dafa487a1b0a800717ff73114fd2c7aa
