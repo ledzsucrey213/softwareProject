@@ -1,5 +1,9 @@
-package login.bl;
 
+/**
+ * 
+ */
 public enum Role {
-
+    admin,
+    operator,
+    client
 }
