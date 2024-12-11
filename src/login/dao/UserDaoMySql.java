@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class UserDaoMySql implements UserDAO {
+public class UserDaoMySql implements UserDao {
 
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/CarService";
     private static final String DB_USER = "root";

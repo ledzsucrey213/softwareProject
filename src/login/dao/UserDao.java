@@ -1,21 +1,20 @@
 package login.dao;
 
-import java.io.*;
-import java.util.*;
+
 
 /**
  *
  */
-public interface UserDAO {
+public interface UserDao {
 
     /**
      *
      */
-    public void saveUser(int id, String name, String surname, int roleId, String password);
+    public void saveUser(String name, String surname, int roleId, String password);
 
     /**
      *
      */
-    public void loadUser(int userId);
+    public void loadUser(int userId, String password);
 
 }
