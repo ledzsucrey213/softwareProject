@@ -1,16 +1,29 @@
-
-<<<<<<< HEAD
+package login.bl;
 import login.dao.*;
 
+/**
+ * 
+ */
 public class MySqlFactory extends AbstractFactory {
-    private static MySqlFactory mySqlFactory;
+	private static MySqlFactory mySqlFactory;
 
-    // Private constructor for Singleton pattern
+    /**
+     * Default constructor
+     */
     private MySqlFactory() {
         System.out.println("MySqlFactory created");
     }
 
-    // Singleton pattern: Return the single instance of the factory
+    /**
+     * @return
+     */
+    public UserDaoMySql createUserDaoMySql() {
+        return new UserDaoMySql();
+    }
+
+    /**
+     * 
+     */
     public static MySqlFactory getInstance() {
         if (mySqlFactory == null) {
             mySqlFactory = new MySqlFactory();
@@ -18,40 +31,4 @@ public class MySqlFactory extends AbstractFactory {
         return mySqlFactory;
     }
 
-    // Create a new instance of UserDaoMySql
-    public UserDaoMySql createUserDaoMySql() {
-        return new UserDaoMySql();
-    }
 }
-=======
-import java.io.*;
-import java.util.*;
-
-/**
- * 
- */
-public class MySQLFactory extends AbstractFactory {
-
-    /**
-     * Default constructor
-     */
-    public MySQLFactory() {
-    }
-
-    /**
-     * @return
-     */
-    public UserDAOMySQL createUserDAO() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * 
-     */
-    public void getInstance() {
-        // TODO implement here
-    }
-
-}
->>>>>>> 10effe60dafa487a1b0a800717ff73114fd2c7aa

@@ -20,14 +20,14 @@ public class LoginService {
     }
 
     /**
-     * @param username 
+     * @param id 
      * @param password
      * @return boolean
      */
-    public boolean authenticate(String userName, String password) {
+    public boolean authenticate(int id, String password) {
         try {
             // Attempt to load the user with the given username and password
-            userDao.loadUser(userName, password);
+            userDao.loadUser(id, password);
             return true; // Authentication successful
         } catch (Exception e) {
             // If loadUser fails (i.e., user does not exist or credentials don't match)
