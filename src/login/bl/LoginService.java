@@ -1,13 +1,16 @@
-
-<<<<<<< HEAD
+package login.bl;
 import login.dao.*;
 import login.ui.*;
-
+/**
+ * 
+ */
 public class LoginService {
-
+	
     private UserDaoMySql userDao;
 
-    // Constructor initializes the UserDaoMySql via MySqlFactory
+    /**
+     * Default constructor
+     */
     public LoginService() {
         // Get the singleton instance of MySqlFactory
         MySqlFactory mySqlFactory = MySqlFactory.getInstance();
@@ -16,7 +19,11 @@ public class LoginService {
         this.userDao = mySqlFactory.createUserDaoMySql();
     }
 
-    // Authenticate a user by username and password
+    /**
+     * @param username 
+     * @param password
+     * @return boolean
+     */
     public boolean authenticate(String userName, String password) {
         try {
             // Attempt to load the user with the given username and password
@@ -29,42 +36,4 @@ public class LoginService {
         }
     }
 
-    // Example usage of the authenticate method
-    public static void main(String[] args) {
-        LoginService loginService = new LoginService();
-
-        // Authenticate a user (this is just an example, adjust credentials as needed)
-        boolean isAuthenticated = loginService.authenticate("Alice", "password456");
-
-        if (isAuthenticated) {
-            System.out.println("User authenticated successfully!");
-        } else {
-            System.out.println("Authentication failed.");
-        }
-    }
 }
-=======
-import java.io.*;
-import java.util.*;
-
-/**
- * 
- */
-public class LoginService {
-
-    /**
-     * Default constructor
-     */
-    public LoginService() {
-    }
-
-    /**
-     * @param username 
-     * @param password
-     */
-    public void authenticate(void username, void password) {
-        // TODO implement here
-    }
-
-}
->>>>>>> 10effe60dafa487a1b0a800717ff73114fd2c7aa
