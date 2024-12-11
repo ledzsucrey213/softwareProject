@@ -1,4 +1,3 @@
-package login.bl;
 import java.sql.*;
 
 
@@ -79,7 +78,7 @@ public class UserDaoMySql implements UserDAO {
 
 
 
-    public void loadUser(int userId, String password) {
+    public void loadUser(int userId) {
 
         String query = "SELECT u.ID_user, u.name, u.surname, r.label_role " +
 
@@ -87,7 +86,7 @@ public class UserDaoMySql implements UserDAO {
 
                        "JOIN role r ON u.roleID = r.ID_role " +
 
-                       "WHERE u.ID_user = " + userId + " AND u.password = " + password;
+                       "WHERE u.ID_user = ?";
 
 
 
