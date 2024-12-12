@@ -10,7 +10,7 @@ public interface UserDao {
     /**
      *
      */
-    public void saveUser(String name, String surname, int roleId, String password);
+    public void saveUser(String name, String surname, Role role, String password);
 
     /**
      *

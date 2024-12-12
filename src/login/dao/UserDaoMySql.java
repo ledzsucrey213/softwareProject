@@ -13,7 +13,7 @@ public class UserDaoMySql implements UserDao {
         }
     }
 
-    public void saveUser(String name, String surname, int roleId, String password) {
+    public void saveUser(String name, String surname, Role role, String password) {
         String userQuery = "INSERT INTO user (name, surname, roleID, password) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
@@ -22,7 +22,7 @@ public class UserDaoMySql implements UserDao {
             // Insert user into the user table
             userStmt.setString(1, name);
             userStmt.setString(2, surname);
-            userStmt.setInt(3, roleId);
+            userStmt.setInt(3, role.getValue());
             userStmt.setString(4, password);
             userStmt.executeUpdate();
 
@@ -31,32 +31,6 @@ public class UserDaoMySql implements UserDao {
         }
     }
 
-    /* public void loadUser(int userId, String password) {
-        String query = "SELECT u.ID_user, u.name, u.surname, r.label_role FROM user u " +
-                       "JOIN role r ON u.roleID = r.ID_role " +
-                       "WHERE u.ID_user = ? AND u.password = ?";
-
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setString(2, password);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    System.out.println("ID: " + resultSet.getInt("ID_user"));
-                    System.out.println("Name: " + resultSet.getString("name"));
-                    System.out.println("Surname: " + resultSet.getString("surname"));
-                    System.out.println("Role: " + resultSet.getString("label_role"));
-                } else {
-                    System.out.println("User not found or incorrect password.");
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    } */ 
 
 
    public User loadUser(int userId, String password) {
@@ -73,8 +47,8 @@ public class UserDaoMySql implements UserDao {
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
                 // Create Role object
-                Role role = new Role();
-                role.setLabel(resultSet.getString("label_role"));
+                int roleValue = Integer.parseInt(resultSet.getString("label_role").trim());
+                Role role = Role.fromValue(roleValue);
 
                 // Create User object
                 User user = new User();
