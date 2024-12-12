@@ -7,18 +7,30 @@ import java.util.*;
  */
 public class User {
     private int id;
-    private String username;
     private String password;
-    private String firstname;
+    private String surname;
     private String name;
     private Role role;
 
-    public String getUsername() {
-        return this.username;
+    // Constructor
+    public User() {}
+
+    // Constructor with username and password
+    public User(int userId, String password , Role r, String surname, String name) {
+        this.setId(userId);
+        this.setName(name);
+        this.setRole(r);
+        this.setPassword(password);
+        this.setSurname(surname);
+        
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(int userId) {
+        this.id = userId;
     }
 
     public String getPassword() {
@@ -29,16 +41,6 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    // Constructor
-    public User() {}
 
 	public Role getRole() {
 		return role;
@@ -56,18 +58,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getSurname() {
+		return this.surname;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
-	
-    // Constructor with username and password
-    public User(String username, String password , Role r, String firstname, String name) {
-        this.username = username;
-        this.password = password;
-        this.setRole(r);
-    }
+
 }
