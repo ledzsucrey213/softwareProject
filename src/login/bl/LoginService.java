@@ -25,15 +25,17 @@ public class LoginService {
      * @return boolean
      */
     public boolean authenticate(int id, String password) {
-        try {
-            // Attempt to load the user with the given username and password
-            userDao.loadUser(id, password);
-            return true; // Authentication successful
-        } catch (Exception e) {
-            // If loadUser fails (i.e., user does not exist or credentials don't match)
-            System.out.println("Authentication failed: " + e.getMessage());
-            return false; // Authentication failed
-        }
+    // Load the user from the database
+    User user = userDao.loadUser(id, password);
+
+    // Check if the user exists and the password matches
+    if (user != null && user.getPassword().equals(password)) {
+        System.out.println("Authentication successful for user ID: " + id);
+        return true; // Authentication successful
+    } else {
+        System.out.println("Authentication failed for user ID: " + id);
+        return false; // Authentication failed
     }
+}
 
 }

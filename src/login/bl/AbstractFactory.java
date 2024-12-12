@@ -13,5 +13,5 @@ public abstract class AbstractFactory {
     /**
      * abstract func
      */
-    public abstract UserDaoMySql createUserDaoMySql();
+    public abstract UserDao createUserDaoMySql();
 }
