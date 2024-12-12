@@ -31,7 +31,7 @@ public class UserDaoMySql implements UserDao {
         }
     }
 
-    public void loadUser(int userId, String password) {
+    /* public void loadUser(int userId, String password) {
         String query = "SELECT u.ID_user, u.name, u.surname, r.label_role FROM user u " +
                        "JOIN role r ON u.roleID = r.ID_role " +
                        "WHERE u.ID_user = ? AND u.password = ?";
@@ -56,5 +56,44 @@ public class UserDaoMySql implements UserDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    } */ 
+
+
+   public User loadUser(int userId, String password) {
+    String query = "SELECT u.ID_user, u.name, u.surname, r.label_role, u.password FROM user u " +
+                   "JOIN role r ON u.roleID = r.ID_role " +
+                   "WHERE u.ID_user = ? AND u.password = ?";
+
+    try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setString(2, password);
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                // Create Role object
+                Role role = new Role();
+                role.setLabel(resultSet.getString("label_role"));
+
+                // Create User object
+                User user = new User();
+                user.setId(resultSet.getInt("ID_user"));
+                user.setName(resultSet.getString("name"));
+                user.setSurname(resultSet.getString("surname"));
+                user.setPassword(resultSet.getString("password"));
+                user.setRole(role);
+
+                return user;
+            } else {
+                // No user found
+                return null;
+            }
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
     }
+}
 }

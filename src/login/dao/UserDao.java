@@ -15,6 +15,6 @@ public interface UserDao {
     /**
      *
      */
-    public void loadUser(int userId, String password);
+    public User loadUser(int userId, String password);
 
 }
