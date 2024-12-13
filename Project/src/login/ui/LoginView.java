@@ -12,6 +12,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import login.bl.LoginService;
+
 
 public class LoginView {
 
@@ -39,6 +41,12 @@ public class LoginView {
         loginButton.setOnMouseEntered(e -> loginButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: black; -fx-background-radius: 25; -fx-padding: 12 30; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.7, 0, 5);"));
         loginButton.setOnMouseExited(e -> loginButton.setStyle("-fx-background-color: #f1c40f; -fx-text-fill: white; -fx-background-radius: 25; -fx-padding: 12 30; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.7, 0, 3);"));
 
+        loginButton.setOnAction(e -> {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            checkAuthentication(username, password);
+        });
+        
         // Mise en page
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
@@ -48,6 +56,21 @@ public class LoginView {
         layout.getChildren().addAll(title, usernameField, passwordField, loginButton);
 
         return new Scene(layout, 450, 350);
+    }
+    private void checkAuthentication(String username, String password) {
+        try {
+        	LoginService login=new LoginService();
+            int userId = Integer.parseInt(username); // Convertit l'ID utilisateur en entier
+            boolean isAuthenticated = login.authenticate(userId, password);
+
+            if (isAuthenticated) {
+                System.out.println("correct");
+            } else {
+                System.out.println("incorrect");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("incorrect: Username must be a valid number.");
+        }
     }
 }
 
