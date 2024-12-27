@@ -1,5 +1,6 @@
 
 import java.io.*;
+import subscription.bl.*;
 import java.util.*;
 
 /**
@@ -10,16 +11,16 @@ public interface SubscriptionDAO {
     /**
      * 
      */
-    public void saveSubscription();
+    public void saveSubscription(Subscription subscription);
 
     /**
      * 
      */
-    public void loadSubscription();
+    public List<Subscription> loadSubscription();
 
     /**
      * 
      */
-    public void deleteSubscription();
+    public void deleteSubscription(int subscriptionId);
 
 }

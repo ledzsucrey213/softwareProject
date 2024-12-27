@@ -10,165 +10,100 @@ public class Subscription {
     /**
      * Default constructor
      */
-    public Subscription() {
-    }
+	 public Subscription(int id, SubscriptionType type,String label ,boolean isActive, Double amount, String description) {
+	        this.id = id;
+	        this.type = type;
+	        this.is_active = isActive;
+	        this.amount = amount;
+	        this.description = description;
+	        this.label = label;
+	    }
 
-    /**
-     * 
-     */
-    private String id;
+	 /**
+	  * 
+	  */
+	 private int id;
 
-    /**
-     * 
-     */
-    private SubscriptionType type;
+	 /**
+	  * 
+	  */
+	 private SubscriptionType type;
 
-    /**
-     * 
-     */
-    private String user;
+	 /**
+	  * 
+	  */
+	 private String label;
 
-    /**
-     * 
-     */
-    private Date start_date;
+	 /**
+	  * 
+	  */
+	 private Boolean is_active;
 
-    /**
-     * 
-     */
-    private Date end_date;
+	 /**
+	  * 
+	  */
+	 private Double amount;
 
-    /**
-     * 
-     */
-    private Boolean is_active;
+	 /**
+	  * 
+	  */
+	 private String description;
 
-    /**
-     * 
-     */
-    private Double amount;
+	 // Getter for ID
+	 public int getId() {
+	     return id;
+	 }
 
-    /**
-     * 
-     */
-    private Boolean auto_renew;
+	 // Getter for Type
+	 public SubscriptionType getType() {
+	     return type;
+	 }
 
-    /**
-     * @return
-     */
-    public Subscription getSubscriptionById() {
-        // TODO implement here
-        return null;
-    }
+	 // Getter for Label
+	 public String getLabel() {
+	     return label;
+	 }
 
-    /**
-     * @return
-     */
-    public SubscriptionType getType() {
-        // TODO implement here
-        return null;
-    }
+	 // Getter for is_active
+	 public Boolean isActive() {
+	     return is_active;
+	 }
 
-    /**
-     * @return
-     */
-    public User getUser() {
-        // TODO implement here
-        return null;
-    }
+	 // Getter for Amount
+	 public Double getAmount() {
+	     return amount;
+	 }
 
-    /**
-     * @return
-     */
-    public Date getStart_date() {
-        // TODO implement here
-        return null;
-    }
+	 // Getter for Description
+	 public String getDescription() {
+	     return description;
+	 }
 
-    /**
-     * @return
-     */
-    public Date getEnd_date() {
-        // TODO implement here
-        return null;
-    }
+	 // Optionally fix getSubscriptionById to accept an ID and fetch from DB
+	 public Subscription getSubscriptionById(int subscriptionId) {
+	     // TODO: Implement database logic here
+	     return null;
+	 }
 
-    /**
-     * @return
-     */
-    public Boolean getIs_active() {
-        // TODO implement here
-        return null;
-    }
 
-    /**
-     * @return
-     */
-    public Double getAmount() {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @return
-     */
-    public Boolean getAuto_renew() {
-        // TODO implement here
-        return null;
-    }
 
     /**
      * @param SubscriptionType type 
      * @return
      */
-    public void setType(void SubscriptionType type) {
-        // TODO implement here
-        return null;
-    }
+    public void setType(SubscriptionType type) {
+    	    this.type = type;
+     }
 
-    /**
-     * @param String 
-     * @return
-     */
-    public void setUser(void String) {
-        // TODO implement here
-        return null;
-    }
+     public void setIsActive(boolean isActive) {
+         this.is_active = isActive; 
+     }
 
-    /**
-     * @param Date end_date 
-     * @return
-     */
-    public void setEnd_date(void Date end_date) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param Boolean is_active 
-     * @return
-     */
-    public void setIs_active(void Boolean is_active) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param Double amount 
-     * @return
-     */
-    public void setAmount(void Double amount) {
-        // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param Boolean auto_renew 
-     * @return
-     */
-    public void setAuto_renew(void Boolean auto_renew) {
-        // TODO implement here
-        return null;
-    }
+     public void setAmount(Double amount) {
+         this.amount = amount;
+     }
+     public void setDescription(String description) {
+         this.description = description;
+     }
 
 }

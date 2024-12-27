@@ -25,7 +25,7 @@ public class User {
         
     }
 
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -41,14 +41,33 @@ public class User {
         this.password = password;
     }
 
+    /**
+     * Retrieves the role assigned to this entity.
+     * 
+     * The role can have one of the following values:
+     * - 0: Admin
+     * - 1: Operator
+     * - 2: User
+     * 
+     * @return the role of the entity.
+     */
+    public Role getRole() {
+        return role;
+    }
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    /**
+     * Assigns a role to this entity.
+     * 
+     * The role can be set to one of the following values:
+     * - 0: Admin
+     * - 1: Operator
+     * - 2: User
+     * 
+     * @param role the role to assign to this entity.
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
 	public String getName() {
 		return name;

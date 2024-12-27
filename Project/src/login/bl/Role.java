@@ -1,3 +1,5 @@
+package login.bl;
+
 public enum Role {
     ADMIN(0),
     OPERATOR(1),

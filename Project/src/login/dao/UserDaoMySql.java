@@ -1,5 +1,8 @@
 import java.sql.*;
 
+import login.bl.User;
+import login.bl.Role;
+
 public class UserDaoMySql implements UserDao {
 
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/CarService";
@@ -12,7 +15,7 @@ public class UserDaoMySql implements UserDao {
             e.printStackTrace();
         }
     }
-
+    
     public void saveUser(String name, String surname, Role role, String password) {
         String userQuery = "INSERT INTO user (name, surname, roleID, password) VALUES (?, ?, ?, ?)";
 
@@ -70,4 +73,7 @@ public class UserDaoMySql implements UserDao {
         return null;
     }
 }
+
+
+
 }

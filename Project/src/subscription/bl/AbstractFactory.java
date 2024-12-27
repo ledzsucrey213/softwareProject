@@ -1,10 +1,6 @@
+package subscription.bl;
 
-import java.io.*;
-import java.util.*;
 
-/**
- * 
- */
 public abstract class AbstractFactory {
 
     /**
@@ -14,11 +10,11 @@ public abstract class AbstractFactory {
     }
 
     /**
-     * @return
+     * This method creates a SubscriptionDAO object. You can modify this
+     * method to instantiate different implementations of SubscriptionDAO based
+     * on configuration or other criteria.
+     * 
+     * @return A SubscriptionDAO object
      */
-    public SubscriptionDAO createSubscriptionDAO() {
-        // TODO implement here
-        return null;
-    }
-
+    public abstract SubscriptionDAO createSubscriptionDAO();
 }
