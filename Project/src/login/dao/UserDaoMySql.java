@@ -17,7 +17,7 @@ public class UserDaoMySql implements UserDao {
     }
     
     public void saveUser(String name, String surname, Role role, String password) {
-        String userQuery = "INSERT INTO user (name, surname, roleID, password) VALUES (?, ?, ?, ?)";
+        String userQuery = "INSERT INTO user (name, surname, role, password) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
              PreparedStatement userStmt = connection.prepareStatement(userQuery)) {

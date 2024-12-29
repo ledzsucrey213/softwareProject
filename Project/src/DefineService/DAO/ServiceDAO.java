@@ -16,21 +16,21 @@ public abstract class ServiceDAO {
     /**
      * 
      */
-    public void saveService() {
+    public void saveService(String name, double price, String categorie, double duration, boolean availability) {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void loadService() {
+    public void loadService(String IDServ) {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void deleteService() {
+    public void deleteService(String IDServ) {
         // TODO implement here
     }
 
