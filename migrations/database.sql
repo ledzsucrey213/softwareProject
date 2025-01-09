@@ -96,6 +96,16 @@ CREATE TABLE subscription
     description TEXT
 );
 
+CREATE TABLE order
+(
+    id                  INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    partName            VARCHAR(255)                                        NOT NULL,
+    partQuantity        INT                                                 NOT NULL,
+    orderStatus         ENUM ('Not ordered', 'In progress', 'Arrived')      NOT NULL,
+    price               DECIMAL(10, 2)                                      NOT NULL,
+    estimatedArrival    Date                                                NOT NULL,
+);
+
 CREATE TABLE payment_type (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   label varchar(50) NOT NULL,
