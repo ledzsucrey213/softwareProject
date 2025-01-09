@@ -13,83 +13,60 @@ public class Order {
     public Order() {
     }
 
-    /**
-     * 
-     */
-    private string id;
-
-    /**
-     * 
-     */
-    private string partName;
-
-    /**
-     * 
-     */
+    private long id;
+    private String partName;
     private int partQuantity;
-
-    /**
-     * 
-     */
     private Status orderStatus;
+    public Date estimatedArrival;
 
-    /**
-     * 
-     */
-    public string estimatedArrival;
-
-    /**
-     * 
-     */
-    public string color;
-
-    /**
-     * 
-     */
-    public string license_plate;
-
-    /**
-     * 
-     */
-    public string type;
-
-    /**
-     * 
-     */
-    public int mileage;
-
-    /**
-     * 
-     */
-    public FuelType fuel_type;
-
-    /**
-     * 
-     */
-    public void engine_size;
-
-    /**
-     * 
-     */
-    public void transmission;
-
-    /**
-     * 
-     */
-    public void owner_id;
-
-    /**
-     * 
-     */
-    public void getters() {
-        // TODO implement here
+    public Order(long id, String partName, int partQuantity, Status status, Date arrival) {
+        this.id = id;
+        this.partName = partName;
+        this.partQuantity = partQuantity;
+        this.orderStatus = status;
+        this.estimatedArrival = arrival;
     }
 
-    /**
-     * 
-     */
-    public void setters() {
-        // TODO implement here
+    public long getId() {
+        return this.id;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPartName() {
+        return this.partName;
+    }
+
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
+
+    public int getPartQuantity() {
+        return this.partQuantity;
+    }
+
+    public void setPartQuantity(String partQuantity) {
+        this.partQuantity = partQuantity;
+    }
+
+    public Status getOrderStatus() {
+        return this.orderStatus;
+    }
+
+    public void setOrderStatus(Status status) {
+        this.orderStatus = status;
+    }
+
+    public Date getEstimatedArrival() {
+        return this.estimatedArrival;
+    }
+
+    public void setEstimatedArrival(Date arrival) {
+        this.estimatedArrival = arrival;
+    }
+
+    
 
 }
