@@ -16,6 +16,7 @@ public class Order {
     private long id;
     private String partName;
     private int partQuantity;
+    private double price;
     private Status orderStatus;
     public Date estimatedArrival;
 
@@ -33,6 +34,15 @@ public class Order {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    
+    public int getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String getPartName() {

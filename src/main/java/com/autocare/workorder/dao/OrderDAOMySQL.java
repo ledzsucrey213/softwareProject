@@ -7,58 +7,63 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OrderDAOMySQL implements OrderDAO {
 
-    @Override public void insertOrder(Order o)
-    throws SQLException {
+    @Override
+    public void insertOrder(Order o) throws SQLException {
         String query = "INSERT INTO order (partName, partQuantity, orderStatus, price, estimatedArrival) "
                        + "VALUES (?, ?, ?, ?, ?)";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
 
-        statement.setString(1, o.getLabel());
-        statement.setDouble(2, o.getFees());
-        statement.setBoolean(3, o.isAvailable());
+        statement.setString(1, o.getPartName());
+        statement.setInt(2, o.getPartQuantity());
+        statement.setString(3, o.getOrderStatus());
+        statement.setDouble(4, o.getPrice());
+        statement.setDate(5, o.getEstimatedArrival());
 
         statement.executeUpdate();
-
         statement.close();
     }
 
-    @Override public List<PaymentType> loadPaymentTypes() throws SQLException {
-        List<PaymentType> paymentTypes = new ArrayList<>();
-        String query = "SELECT id, label, fees, isAvailable FROM payment_type";
+    @Override
+    public Order loadOrder(long orderId) throws SQLException {
+        String query = "SELECT id, partName, partQuantity, orderStatus, price, estimatedArrival "
+                       + "FROM order WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
 
-        ResultSet resultSet = statement.executeQuery();
+        statement.setLong(1, orderId);
 
-        while (resultSet.next()) {
-            paymentTypes.add(new PaymentType(resultSet.getLong("id"),
-                                             resultSet.getString("label"),
-                                             resultSet.getDouble("fees"),
-                                             resultSet.getBoolean("isAvailable")
-            ));
+        ResultSet resultSet = statement.executeQuery();
+        Order order = null;
+
+        if (resultSet.next()) {
+            order = new Order(
+                resultSet.getLong("id"),
+                resultSet.getString("partName"),
+                resultSet.getInt("partQuantity"),
+                resultSet.getString("orderStatus"),
+                resultSet.getDouble("price"),
+                resultSet.getDate("estimatedArrival")
+            );
         }
 
         statement.close();
-
-        return paymentTypes;
+        return order;
     }
 
-    @Override public boolean deletePaymentType(long paymentTypeID)
-    throws SQLException {
-        String query = "DELETE FROM payment_type WHERE id = ?";
+    @Override
+    public boolean deleteOrder(long orderId) throws SQLException {
+        String query = "DELETE FROM order WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
 
-        statement.setLong(1, paymentTypeID);
+        statement.setLong(1, orderId);
 
         int rowsUpdated = statement.executeUpdate();
         statement.close();
@@ -66,18 +71,20 @@ public class OrderDAOMySQL implements OrderDAO {
         return rowsUpdated > 0;
     }
 
-    @Override public void updatePaymentType(PaymentType paymentType)
-    throws SQLException {
-        String query = "UPDATE payment_type SET label = ?, fees = ?, "
-                       + "isAvailable = ? WHERE id = ?";
+    @Override
+    public void updateOrder(Order order) throws SQLException {
+        String query = "UPDATE order SET partName = ?, partQuantity = ?, orderStatus = ?, "
+                       + "price = ?, estimatedArrival = ? WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
 
-        statement.setString(1, paymentType.getLabel());
-        statement.setDouble(2, paymentType.getFees());
-        statement.setBoolean(3, paymentType.isAvailable());
-        statement.setLong(4, paymentType.getId());
+        statement.setString(1, order.getPartName());
+        statement.setInt(2, order.getPartQuantity());
+        statement.setString(3, order.getOrderStatus());
+        statement.setDouble(4, order.getPrice());
+        statement.setDate(5, order.getEstimatedArrival());
+        statement.setLong(6, order.getId());
 
         statement.executeUpdate();
         statement.close();
