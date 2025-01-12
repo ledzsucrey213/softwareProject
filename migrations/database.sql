@@ -10,6 +10,9 @@ DROP TABLE IF EXISTS payment_type;
 DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS cart;
 DROP TABLE IF EXISTS transaction;
+DROP TABLE IF EXISTS LoyaltyProgram;
+DROP TABLE IF EXISTS Appointment;
+DROP TABLE IF EXISTS ServiceType;
 
 CREATE TABLE user
 (
@@ -149,6 +152,30 @@ CREATE TABLE transaction
     FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE LoyaltyProgram (
+    clientId INT UNSIGNED PRIMARY KEY,
+    points INT NOT NULL DEFAULT 0,
+    rewards TEXT DEFAULT NULL,
+    FOREIGN KEY (clientId) REFERENCES user(ID_user) ON DELETE CASCADE
+);
+
+CREATE TABLE Appointment (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    time VARCHAR(10) NOT NULL, -- Store time as a string (e.g., '10:00 AM')
+    userId INT UNSIGNED NOT NULL,
+    done BOOLEAN NOT NULL DEFAULT FALSE,
+    description TEXT,
+    FOREIGN KEY (userId) REFERENCES user(ID_user) ON DELETE CASCADE
+);
+
+CREATE TABLE ServiceType (
+    serviceTypeId INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT
+);
+
+
 INSERT INTO user (ID_user, username, name, surname, role, password)
 VALUES (1, 'john_doe', 'John', 'Doe', 'ADMIN', 'john.doe'),
        (2, 'jane_smith', 'Jane', 'Smith', 'ADMIN', 'jane.smith'),
@@ -275,3 +302,31 @@ VALUES
     ('Gift Card', 0.0, TRUE),
     ('Stripe', 2.9, TRUE),
     ('Venmo', 1.2, TRUE);
+
+
+INSERT INTO LoyaltyProgram (clientId, points, rewards)
+VALUES
+    (1, 0, 'Gift Card 25€,Gift Card 50€'),
+    (2, 0, 'Gift Card 25€,Gift Card 50€'),
+    (3, 0, 'Gift Card 25€,Gift Card 50€'),
+    (4, 0, 'Gift Card 25€,Gift Card 50€');
+
+INSERT INTO Appointment (date, time, userId, done, description)
+VALUES 
+    ('2025-01-15', '09:00 AM', 1, FALSE, 'Car wash appointment for John Doe'),
+    ('2025-01-15', '10:30 AM', 2, TRUE, 'Tire check appointment for Jane Smith'),
+    ('2025-01-16', '02:00 PM', 3, FALSE, 'Interior detailing for Alice Johnson'),
+    ('2025-01-17', '11:00 AM', 4, FALSE, 'Oil change appointment for Omar EL BAF');
+
+INSERT INTO ServiceType (name, description)
+VALUES
+    ('Basic Car Wash', 'A standard exterior car wash with rinse and dry.'),
+    ('Premium Car Wash', 'A comprehensive wash with waxing and tire cleaning.'),
+    ('Tire Rotation', 'Tire rotation service to ensure even tire wear.'),
+    ('Oil Change', 'Changing engine oil and replacing the oil filter.'),
+    ('Interior Detailing', 'Deep cleaning of the car interior including seats and carpets.'),
+    ('Brake Inspection', 'Inspection of the brake system to ensure safety.'),
+    ('Battery Check', 'Testing the health and charge of the car battery.'),
+    ('Alignment Service', 'Wheel alignment to maintain proper handling.'),
+    ('Air Conditioning Repair', 'Service for diagnosing and fixing air conditioning issues.'),
+    ('Engine Diagnostics', 'Comprehensive engine diagnostics and troubleshooting.');
