@@ -8,12 +8,32 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for managing items in the system.
+ * This class provides business logic for interacting with the data access layer
+ * (DAO) to manage operations related to items, such as adding, updating, deleting,
+ * and retrieving items.
+ */
+
 public class ItemService {
     private ItemDAO itemDAO;
+
+    /**
+     * Constructor for creating an ItemService instance.
+     * Initializes the {@link ItemDAO} using the provided factory.
+     *
+     * @param itemDAOFactory The {@link ItemDAOFactory} used to create the ItemDAO instance.
+     */
 
     public ItemService(ItemDAOFactory itemDAOFactory) {
         itemDAO = itemDAOFactory.createItemDAO();
     }
+
+    /**
+     * Adds a new item to the system.
+     *
+     * @param item The {@link Item} object to be added.
+     */
 
     // Add a new item
     public void addItem(Item item) {
@@ -24,6 +44,12 @@ public class ItemService {
         }
     }
 
+    /**
+     * Updates an existing item in the system.
+     *
+     * @param item The {@link Item} object with updated information.
+     */
+
     // Update an existing item
     public void updateItem(Item item) {
         try {
@@ -32,6 +58,13 @@ public class ItemService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Deletes an item from the system.
+     *
+     * @param item The {@link Item} object to be deleted.
+     * @return true if the item was successfully deleted, false otherwise.
+     */
 
     // Delete an item
     public boolean deleteItem(Item item) {
@@ -43,6 +76,14 @@ public class ItemService {
         return false;
     }
 
+
+    /**
+     * Retrieves a specific item by its ID.
+     *
+     * @param id The ID of the {@link Item} to be retrieved.
+     * @return An {@link Optional} containing the {@link Item} if found, or an empty Optional if not.
+     */
+
     // Get a specific item by its ID
     public Optional<Item> getItemById(long id) {
         try {
@@ -52,6 +93,12 @@ public class ItemService {
         }
         return Optional.empty();
     }
+
+    /**
+     * Retrieves a list of all items in the system.
+     *
+     * @return A list of all {@link Item} objects.
+     */
 
     // Get a list of all items
     public List<Item> getAllItems() {

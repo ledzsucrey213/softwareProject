@@ -19,6 +19,13 @@ public class VehicleDAOMySQL implements VehicleDAO {
     public VehicleDAOMySQL() {
     }
 
+    /**
+     * Inserts a new vehicle into the database.
+     *
+     * @param car The {@link Vehicle} object containing the details of the vehicle to be inserted.
+     * @throws SQLException If a database error occurs during the insertion.
+     */
+
     // Save a car to the database
     public void insertVehicle(Vehicle car) throws SQLException {
         String insertQuery = "INSERT INTO vehicle"
@@ -43,6 +50,13 @@ public class VehicleDAOMySQL implements VehicleDAO {
         insertStatement.executeUpdate();
         insertStatement.close();
     }
+
+    /**
+     * Loads all vehicles from the database.
+     *
+     * @return A list of {@link Vehicle} objects representing all vehicles in the database.
+     * @throws SQLException If a database error occurs during the retrieval of vehicles.
+     */
 
     // Load all cars from the database
     public List<Vehicle> loadVehicles() throws SQLException {
@@ -88,6 +102,14 @@ public class VehicleDAOMySQL implements VehicleDAO {
         return cars;
     }
 
+    /**
+     * Deletes a vehicle from the database.
+     *
+     * @param carId The ID of the vehicle to be deleted.
+     * @return A boolean indicating whether the deletion was successful.
+     * @throws SQLException If a database error occurs during the deletion.
+     */
+
     // Delete a car from the database
     public boolean deleteVehicles(long carId) throws SQLException {
         String deleteSQL = "DELETE FROM vehicle WHERE id = ?";
@@ -105,6 +127,13 @@ public class VehicleDAOMySQL implements VehicleDAO {
 
         return rowsAffected > 0;
     }
+
+    /**
+     * Updates the details of an existing vehicle in the database.
+     *
+     * @param vehicle The {@link Vehicle} object containing the updated details of the vehicle.
+     * @throws SQLException If a database error occurs during the update.
+     */
 
     // Update a car in the database
     public void updateVehicle(Vehicle vehicle) throws SQLException {

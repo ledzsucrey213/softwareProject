@@ -14,6 +14,17 @@ import java.util.List;
 
 public class UserMySqlDAO implements UserDAO {
 
+    /**
+     * Saves a new user to the database.
+     *
+     * @param name The user's first name.
+     * @param surname The user's last name.
+     * @param username The user's username.
+     * @param role The {@link Role} of the user (e.g., ADMIN, USER).
+     * @param password The user's password.
+     * @throws SQLException If a database error occurs during the user insertion.
+     */
+
     public void saveUser(String name, String surname, String username,
                          Role role, String password)
     throws SQLException {
@@ -35,6 +46,15 @@ public class UserMySqlDAO implements UserDAO {
 
         userStmt.close();
     }
+
+    /**
+     * Loads a user from the database based on their username and password.
+     *
+     * @param username The username of the user to be loaded.
+     * @param password The password of the user to be loaded.
+     * @return An {@link Optional} containing the {@link User} if found, or an empty {@link Optional} if no user matches.
+     * @throws SQLException If a database error occurs during the user retrieval.
+     */
 
 
     public Optional<User> loadUser(String username, String password)
@@ -72,6 +92,13 @@ public class UserMySqlDAO implements UserDAO {
         preparedStatement.close();
         return user;
     }
+
+    /**
+     * Loads all users from the database.
+     *
+     * @return A list of all {@link User} objects in the database.
+     * @throws SQLException If a database error occurs during the retrieval of users.
+     */
 
     public List<User> loadUsers() throws SQLException {
         List<User> users = new ArrayList<>();
@@ -111,6 +138,13 @@ public class UserMySqlDAO implements UserDAO {
         return users;
     }
 
+    /**
+     * Deletes a user from the database based on the user ID.
+     *
+     * @param userId The ID of the user to be deleted.
+     * @throws SQLException If a database error occurs during the deletion of the user.
+     */
+
     @Override
     public void deleteUser(long userId) throws SQLException {
         String query = "DELETE FROM user WHERE ID_user = ?";
@@ -128,6 +162,13 @@ public class UserMySqlDAO implements UserDAO {
         // Clean up resources
         preparedStatement.close();
     }
+
+    /**
+     * Updates an existing user's information in the database.
+     *
+     * @param user The {@link User} object containing the updated information.
+     * @throws SQLException If a database error occurs during the update.
+     */
 
 
     @Override

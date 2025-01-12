@@ -11,6 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrandDAOMySQL implements BrandDAO {
+
+    /**
+     * Retrieves all vehicle brands from the database.
+     *
+     * @return A list of {@link Brand} objects representing all the brands in the database.
+     * @throws SQLException If a database error occurs during the retrieval of the brands.
+     */
+
     @Override public List<Brand> getAllBrands() throws SQLException {
         List<Brand> brands = new ArrayList<>();
         String query = "SELECT id, name FROM brand";

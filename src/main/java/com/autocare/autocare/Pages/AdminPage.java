@@ -1,11 +1,15 @@
 package com.autocare.autocare.Pages;
 
 import com.autocare.payment.ui.ManagePaymentTypeView;
+import com.autocare.subscription.ui.SubscriptionView;
+import com.autocare.user.ui.ManageUsersView;
+import com.autocare.vehicle.ui.VehicleView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.stage.Stage;
 
 
 import static javafx.application.Platform.exit;
@@ -34,12 +38,41 @@ public class AdminPage {
         layout.setStyle("-fx-background-color: #34495e;");
 
         ManagePaymentTypeView PaymentInterface = new ManagePaymentTypeView();
+        ManageUsersView MserInterface = new ManageUsersView();
+        VehicleView VehicleInterface = new VehicleView();
+        SubscriptionView SubscriptionInterface = new SubscriptionView();
 
-        // Button actions (to be implemented)
-        definePaymentTypesButton.setOnAction(e -> PaymentInterface.createPaymentTypeScene()  );
-        addEditUserListButton.setOnAction(e -> System.out.println("Redirect to Add/Edit User List Page"));
-        defineVehiclesButton.setOnAction(e -> System.out.println("Redirect to Define Vehicles Page"));
-        defineSubscriptionsButton.setOnAction(e -> exit());
+        // Button actions (open as popups)
+        definePaymentTypesButton.setOnAction(e -> {
+            Stage paymentTypePopup = new Stage();
+            paymentTypePopup.setTitle("Manage Payment Types");
+            paymentTypePopup.setScene(PaymentInterface.createPaymentTypeScene());
+            paymentTypePopup.show();
+        });
+
+        addEditUserListButton.setOnAction(e -> {
+            Stage userPopup = new Stage();
+            userPopup.setTitle("Manage Users");
+            userPopup.setScene(MserInterface.createUserScene());
+            userPopup.show();
+        });
+
+        defineVehiclesButton.setOnAction(e -> {
+            Stage vehiclePopup = new Stage();
+            vehiclePopup.setTitle("Manage Vehicles");
+            vehiclePopup.setScene(VehicleInterface.createVehicleScene());
+            vehiclePopup.show();
+        });
+
+        defineSubscriptionsButton.setOnAction(e -> {
+            Stage subscriptionPopup = new Stage();
+            subscriptionPopup.setTitle("Manage Subscriptions");
+            subscriptionPopup.setScene(SubscriptionInterface.createSubscriptionScene());
+            subscriptionPopup.show();
+        });
+
+        logoutButton.setOnAction(e -> exit());
+
 
 
         // Return the scene

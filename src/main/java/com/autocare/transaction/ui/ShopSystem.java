@@ -1,5 +1,6 @@
 package com.autocare.transaction.ui;
 
+import com.autocare.SessionManager.SessionManager;
 import com.autocare.transaction.Cart;
 import com.autocare.transaction.Item;
 import com.autocare.transaction.Transaction;
@@ -31,7 +32,7 @@ public class ShopSystem {
 
     private final ItemService itemService;
     private final CartService cartService;
-    private final User user;
+    private final Optional<User> user;
     private Optional<Cart> cart;
     private TableView<Item> itemTable;
     private ObservableList<Item> availableItems;
@@ -39,7 +40,7 @@ public class ShopSystem {
     public ShopSystem(User user) throws SQLException {
         itemService = new ItemService(new ItemDAOMySQLFactory());
         cartService = new CartService(new CartDAOMySQLFactory(), new TransactionDAOMySQLFactory());
-        this.user = user;
+        this.user = Optional.ofNullable(user);
         this.cart = cartService.getCart(user);
     }
 
@@ -66,7 +67,7 @@ public class ShopSystem {
                 addButton.setOnAction(event -> {
                     if (cart.isEmpty()) {
                         try {
-                            cart = Optional.of(cartService.createCart(user));
+                            cart = Optional.of(cartService.createCart(user.get()));
                         } catch (SQLException sqlException) {
                             showAlert("ERROR", "Could not create a cart!");
                             sqlException.printStackTrace();
@@ -202,7 +203,7 @@ public class ShopSystem {
                 addButton.setOnAction(event -> {
                     if (cart.isEmpty()) {
                         try {
-                            cart = Optional.of(cartService.createCart(user));
+                            cart = Optional.of(cartService.createCart(user.get()));
                         } catch (SQLException sqlException) {
                             showAlert("ERROR", "Could not create a cart!");
                             sqlException.printStackTrace();
@@ -225,7 +226,7 @@ public class ShopSystem {
                 removeButton.setOnAction(event -> {
                     if (cart.isEmpty()) {
                         try {
-                            cart = Optional.of(cartService.createCart(user));
+                            cart = Optional.of(cartService.createCart(user.get()));
                         } catch (SQLException sqlException) {
                             showAlert("ERROR", "Could not create a cart!");
                             sqlException.printStackTrace();

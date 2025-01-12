@@ -17,6 +17,14 @@ public class SubscriptionDAOMySQL implements SubscriptionDAO {
 
     }
 
+    /**
+     * Inserts a new subscription into the database.
+     * This method will store the subscription details such as type, label, status, amount, and description.
+     *
+     * @param subscription The {@link Subscription} object containing the subscription data to be inserted.
+     * @throws SQLException If there is an issue with the database during the insertion.
+     */
+
     public void insertSubscription(Subscription subscription)
     throws SQLException {
         String insertQuery =
@@ -41,6 +49,15 @@ public class SubscriptionDAOMySQL implements SubscriptionDAO {
         System.out.println("Subscription saved successfully!");
 
     }
+
+    /**
+     * Loads all subscriptions from the database.
+     * This method queries the database and returns a list of {@link Subscription} objects
+     * containing details such as id, type, label, status, amount, and description.
+     *
+     * @return A list of {@link Subscription} objects representing all subscriptions in the system.
+     * @throws SQLException If there is an issue with the database during the query.
+     */
 
     public List<Subscription> loadSubscription() throws SQLException {
         List<Subscription> subscriptions = new ArrayList<>();
@@ -74,6 +91,15 @@ public class SubscriptionDAOMySQL implements SubscriptionDAO {
         return subscriptions;
     }
 
+
+    /**
+     * Deletes a subscription from the database based on the provided subscription ID.
+     * This method will remove the subscription record corresponding to the specified ID.
+     *
+     * @param subscriptionId The ID of the {@link Subscription} to be deleted.
+     * @throws SQLException If there is an issue with the database during the deletion.
+     */
+
     public void deleteSubscription(long subscriptionId) throws SQLException {
         String deleteSQL = "DELETE FROM subscription WHERE id = ?";
 
@@ -101,6 +127,16 @@ public class SubscriptionDAOMySQL implements SubscriptionDAO {
 
 
     }
+
+    /**
+     * Updates the details of an existing subscription in the database.
+     * This method updates the subscription’s label, type, amount, status, and description
+     * based on the subscription’s ID.
+     *
+     * @param subscription The {@link Subscription} object containing the updated details to be stored.
+     * @throws SQLException If there is an issue with the database during the update.
+     * @throws IllegalArgumentException If the subscription ID is empty.
+     */
 
     public void update(Subscription subscription) throws SQLException {
         if (subscription.getId().isEmpty()) {

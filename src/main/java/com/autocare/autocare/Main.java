@@ -1,6 +1,7 @@
 package com.autocare.autocare;
 
 import com.autocare.login.ui.LoginView;
+import com.autocare.payment.ui.ManagePaymentTypeView;
 import com.autocare.sql.SqlConnectionManager;
 import com.autocare.subscription.ui.SubscriptionView;
 import com.autocare.transaction.ui.ShopSystem;
@@ -18,12 +19,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws SQLException {
         User user;
-        user = new User(4 , "omaritto", Role.ADMIN, "EL BAF", "Omar");
         // Crée l'instance de LoginView
-        ShopSystem loginView = new ShopSystem(user);
+        LoginView loginView = new LoginView();
 
         // Crée la scène de connexion
-        primaryStage.setScene(loginView.createItemScene());
+        primaryStage.setScene(loginView.createLoginScene(primaryStage));
 
         // Définit le titre de la fenêtre et la montre
         primaryStage.setTitle("Login");

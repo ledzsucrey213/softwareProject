@@ -12,6 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDAOMySQL implements TransactionDAO {
+
+    /**
+     * Inserts a new transaction into the database.
+     *
+     * @param transaction The {@link Transaction} object to be inserted into the database.
+     * @return The ID of the newly inserted transaction.
+     * @throws SQLException If a database error occurs during the insertion.
+     * @throws IllegalArgumentException If the cart or item ID is not valid.
+     */
+
     @Override public long insertTransaction(Transaction transaction)
     throws SQLException {
         if (transaction.getCart().getId().isEmpty()) {
@@ -50,6 +60,14 @@ public class TransactionDAOMySQL implements TransactionDAO {
         return id;
     }
 
+    /**
+     * Updates an existing transaction in the database.
+     *
+     * @param transaction The {@link Transaction} object with updated information to be saved.
+     * @throws SQLException If a database error occurs during the update.
+     * @throws IllegalArgumentException If the cart or item ID is not valid.
+     */
+
     @Override public void updateTransaction(Transaction transaction)
     throws SQLException {
         if (transaction.getCart().getId().isEmpty()) {
@@ -76,6 +94,15 @@ public class TransactionDAOMySQL implements TransactionDAO {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
+    /**
+     * Deletes a transaction from the database.
+     *
+     * @param transaction The {@link Transaction} object to be deleted.
+     * @return true if the transaction was successfully deleted, false otherwise.
+     * @throws SQLException If a database error occurs during the deletion.
+     * @throws IllegalArgumentException If the cart or item ID is not valid.
+     */
 
     @Override public boolean deleteTransaction(Transaction transaction)
     throws SQLException {
@@ -105,6 +132,14 @@ public class TransactionDAOMySQL implements TransactionDAO {
 
         return rowsAffected > 0;
     }
+
+    /**
+     * Retrieves all transactions associated with a given cart from the database.
+     *
+     * @param cartId The ID of the cart whose transactions are to be retrieved.
+     * @return A list of {@link Transaction} objects associated with the specified cart.
+     * @throws SQLException If a database error occurs during the retrieval.
+     */
 
     @Override public List<Transaction> getTransactionFromCart(long cartId)
     throws SQLException {

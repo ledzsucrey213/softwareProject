@@ -12,6 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class ItemDAOMySQL implements ItemDAO {
+    /**
+     * Inserts a new item into the database.
+     *
+     * @param item The {@link Item} object to be inserted into the database.
+     * @throws SQLException If a database error occurs during the insertion.
+     */
+
     @Override public void insertItem(Item item) throws SQLException {
         String query = "INSERT INTO item (label, description, price) VALUES "
                        + "(?, ?, ?)";
@@ -27,6 +34,13 @@ public class ItemDAOMySQL implements ItemDAO {
         preparedStatement.close();
     }
 
+    /**
+     * Updates an existing item in the database.
+     *
+     * @param item The {@link Item} object with updated information to be saved.
+     * @throws SQLException If a database error occurs during the update.
+     */
+
     @Override public void updateItem(Item item) throws SQLException {
         String query = "UPDATE item SET label = ?, description = ?, price = ? "
                        + "WHERE id = ?";
@@ -41,6 +55,16 @@ public class ItemDAOMySQL implements ItemDAO {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
+    /**
+     * Deletes an item from the database.
+     * The item must have a valid ID before it can be deleted.
+     *
+     * @param item The {@link Item} object to be deleted.
+     * @return true if the item was successfully deleted, false otherwise.
+     * @throws SQLException If a database error occurs during the deletion.
+     * @throws IllegalArgumentException If the item does not have a valid ID.
+     */
 
     @Override public boolean deleteItem(Item item) throws SQLException {
         if (item.getId().isEmpty()) {
@@ -59,6 +83,14 @@ public class ItemDAOMySQL implements ItemDAO {
 
         return rowsAffected > 0;
     }
+
+    /**
+     * Retrieves a specific item from the database by its ID.
+     *
+     * @param id The ID of the item to retrieve.
+     * @return An {@link Optional} containing the {@link Item} object if found, or an empty {@link Optional} if no item exists with the given ID.
+     * @throws SQLException If a database error occurs during the retrieval.
+     */
 
     @Override public Optional<Item> getItem(long id) throws SQLException {
         String
@@ -83,6 +115,13 @@ public class ItemDAOMySQL implements ItemDAO {
 
         return item;
     }
+
+    /**
+     * Retrieves a list of all items in the database.
+     *
+     * @return A {@link List} containing all {@link Item} objects in the database.
+     * @throws SQLException If a database error occurs during the retrieval.
+     */
 
     @Override public List<Item> getAllItems() throws SQLException {
         List<Item> list = new ArrayList<>();

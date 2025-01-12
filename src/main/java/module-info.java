@@ -13,6 +13,7 @@ module com.autocare.autocare {
     opens com.autocare.subscription to javafx.base;
     opens com.autocare.subscription.service to javafx.base;
     opens com.autocare.user to javafx.base;
+    opens com.autocare.payment to javafx.base;
 
     opens com.autocare.transaction to javafx.base;
 }

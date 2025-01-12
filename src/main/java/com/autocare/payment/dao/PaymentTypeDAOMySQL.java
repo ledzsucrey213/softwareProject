@@ -10,7 +10,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is an implementation of the {@link PaymentTypeDAO} interface for interacting with a MySQL database.
+ * It provides methods for CRUD (Create, Read, Update, Delete) operations on the {@link PaymentType} entity.
+ * All database connections are managed via the {@link SqlConnectionManager}.
+ */
+
 public class PaymentTypeDAOMySQL implements PaymentTypeDAO {
+
+    /**
+     * Inserts a new {@link PaymentType} into the database.
+     *
+     * @param paymentType The {@link PaymentType} object to be inserted.
+     * @throws SQLException If there is an issue with the SQL execution or database connection.
+     */
 
     @Override public void insertPaymentType(PaymentType paymentType)
     throws SQLException {
@@ -28,6 +41,13 @@ public class PaymentTypeDAOMySQL implements PaymentTypeDAO {
 
         statement.close();
     }
+
+    /**
+     * Loads all {@link PaymentType} records from the database.
+     *
+     * @return A list of {@link PaymentType} objects representing all the payment types in the database.
+     * @throws SQLException If there is an issue with the SQL execution or database connection.
+     */
 
     @Override public List<PaymentType> loadPaymentTypes() throws SQLException {
         List<PaymentType> paymentTypes = new ArrayList<>();
@@ -51,6 +71,14 @@ public class PaymentTypeDAOMySQL implements PaymentTypeDAO {
         return paymentTypes;
     }
 
+    /**
+     * Deletes a {@link PaymentType} from the database based on its ID.
+     *
+     * @param paymentTypeID The ID of the {@link PaymentType} to be deleted.
+     * @return {@code true} if the deletion was successful, {@code false} otherwise.
+     * @throws SQLException If there is an issue with the SQL execution or database connection.
+     */
+
     @Override public boolean deletePaymentType(long paymentTypeID)
     throws SQLException {
         String query = "DELETE FROM payment_type WHERE id = ?";
@@ -65,6 +93,14 @@ public class PaymentTypeDAOMySQL implements PaymentTypeDAO {
 
         return rowsUpdated > 0;
     }
+
+
+    /**
+     * Updates an existing {@link PaymentType} in the database.
+     *
+     * @param paymentType The {@link PaymentType} object with updated data.
+     * @throws SQLException If there is an issue with the SQL execution or database connection.
+     */
 
     @Override public void updatePaymentType(PaymentType paymentType)
     throws SQLException {

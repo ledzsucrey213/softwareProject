@@ -1,9 +1,11 @@
 package com.autocare.login.ui;
 
+import com.autocare.SessionManager.SessionManager;
 import com.autocare.autocare.PageManager;
 import com.autocare.login.service.LoginService;
 import com.autocare.user.Role;
 import com.autocare.user.factory.UserDAOMySQLFactory;
+import com.autocare.user.service.UserService;
 import  javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,6 +26,7 @@ public class LoginView {
 
     public Scene createLoginScene(Stage primaryStage) {
         // Créer le titre
+
         Text title = new Text("AutoCare Login");
         title.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
         title.setFill(Color.WHITE);
@@ -65,10 +68,12 @@ public class LoginView {
     private void checkAuthentication(String username, String password , Stage primaryStage) {
         try {
         	LoginService login=new LoginService(new UserDAOMySQLFactory());
-            boolean isAuthenticated = login.authenticate(username, password);
+            boolean isAuthenticated = login.authenticate(username, password );
 
             if (isAuthenticated) {
-                primaryStage.setScene(RoleScene(username, password));
+                primaryStage.setScene(RoleScene(username, password , primaryStage));
+                UserService u = new UserService(new UserDAOMySQLFactory());
+                SessionManager.startSession(u.getUser(username,password));
             } else {
                 System.out.println("incorrect");
             }
@@ -79,10 +84,10 @@ public class LoginView {
         }
     }
 
-    private Scene RoleScene(String username,String password) throws SQLException {
+    private Scene RoleScene(String username,String password , Stage primaryStage) throws SQLException {
         LoginService login=new LoginService(new UserDAOMySQLFactory());
         Role r = login.UserRole(username, password);
-        PageManager pageManager = new PageManager(r);
+        PageManager pageManager = new PageManager(r , primaryStage);
         return pageManager.getSceneForRole();
     }
 }

@@ -11,6 +11,16 @@ import java.sql.*;
 import java.util.Optional;
 
 public class CartDAOMySQL implements CartDAO {
+
+    /**
+     * Inserts a new cart into the database.
+     * This method also sets the generated ID for the cart after insertion.
+     *
+     * @param cart The {@link Cart} object to be inserted into the database.
+     * @return The {@link Cart} object with the generated ID.
+     * @throws SQLException If a database error occurs during the insertion.
+     */
+
     @Override public Cart insertCart(Cart cart) throws SQLException {
         String query = "INSERT INTO cart (owner_id) VALUES (?)";
 
@@ -32,6 +42,16 @@ public class CartDAOMySQL implements CartDAO {
         return cart;
     }
 
+    /**
+     * Removes a cart from the database.
+     * The cart must have a valid ID before it can be removed.
+     *
+     * @param cart The {@link Cart} object to be removed from the database.
+     * @return true if the cart was successfully removed, false otherwise.
+     * @throws SQLException If a database error occurs during the deletion.
+     * @throws IllegalArgumentException If the cart's ID is empty.
+     */
+
     @Override public boolean removeCart(Cart cart) throws SQLException {
         if (cart.getId().isEmpty()) {
             throw new IllegalArgumentException("Cart id cannot be empty");
@@ -49,6 +69,16 @@ public class CartDAOMySQL implements CartDAO {
         statement.close();
         return rowsAffected > 0;
     }
+
+
+    /**
+     * Retrieves the cart of a user along with the transactions associated with it.
+     * This method joins the `cart`, `user`, `transaction`, and `item` tables to retrieve full cart details.
+     *
+     * @param userId The ID of the user whose cart is to be retrieved.
+     * @return An {@link Optional} containing the {@link Cart} object if found, or an empty {@link Optional} if no cart exists.
+     * @throws SQLException If a database error occurs during the retrieval.
+     */
 
     @Override public Optional<Cart> getCartOfUser(long userId) throws SQLException {
         String query = """
