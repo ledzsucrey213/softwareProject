@@ -121,6 +121,16 @@ CREATE TABLE item
     price       DOUBLE       NOT NULL
 );
 
+CREATE TABLE bill
+(
+    id          INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    client_id   INT UNSIGNED NOT NULL,
+    service_type varchar(50) NOT NULL,
+    bill_date    DATE NOT NULL,
+    bill_status  varchar(50) NOT NULL,
+    cost DOUBLE NOT NULL
+);
+
 CREATE TABLE cart
 (
     id       INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,

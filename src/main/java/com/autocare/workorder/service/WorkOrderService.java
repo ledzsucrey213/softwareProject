@@ -16,7 +16,7 @@ public class WorkOrderService {
     }
 
     public List<Order> getAllOrders() throws SQLException {
-        //
+        return orderDAO.loadAllOrders();
     }
 
     public void addOrder(Order o) throws SQLException {

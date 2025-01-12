@@ -89,4 +89,30 @@ public class OrderDAOMySQL implements OrderDAO {
         statement.executeUpdate();
         statement.close();
     }
+
+    @Override
+    public List<Order> loadAllOrders() throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        String query = "SELECT id, partName, partQuantity, orderStatus, price, estimatedArrival FROM order";
+
+        Connection con = SqlConnectionManager.getConnection();
+        PreparedStatement statement = con.prepareStatement(query);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            orders.add(new Order(
+                resultSet.getLong("id"),
+                resultSet.getString("partName"),
+                resultSet.getInt("partQuantity"),
+                resultSet.getString("orderStatus"),
+                resultSet.getDouble("price"),
+                resultSet.getDate("estimatedArrival")
+            ));
+        }
+
+        statement.close();
+        return orders;
+    }
+
 }

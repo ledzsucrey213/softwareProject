@@ -11,7 +11,7 @@ public interface OrderDAO {
 
     public void updateOrder(Order order) throws SQLException;
 
-    
+    public List<Order> loadAllOrders() throws SQLException;
 
     
 }
