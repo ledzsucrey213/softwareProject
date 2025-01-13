@@ -1,10 +1,9 @@
-package.com.autocare.workorder;
 
 
 public enum Status {
     NotOrdered,
     InProgress,
-    Arrived
+    Arrived;
 
 public static Status fromValue(String value) {
     for (Status status : Status.values()) {

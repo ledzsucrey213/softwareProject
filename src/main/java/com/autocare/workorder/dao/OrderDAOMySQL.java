@@ -1,18 +1,20 @@
 package com.autocare.workorder.dao;
 
-import com.autocare.workorder.Order;
+import com.autocare.workorder.*;
 import com.autocare.sql.SqlConnectionManager;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 
 public class OrderDAOMySQL implements OrderDAO {
 
     @Override
     public void insertOrder(Order o) throws SQLException {
-        String query = "INSERT INTO order (partName, partQuantity, orderStatus, price, estimatedArrival) "
+        String query = "INSERT INTO `order` (partName, partQuantity, orderStatus, price, estimatedArrival) "
                        + "VALUES (?, ?, ?, ?, ?)";
 
         Connection con = SqlConnectionManager.getConnection();
@@ -20,9 +22,9 @@ public class OrderDAOMySQL implements OrderDAO {
 
         statement.setString(1, o.getPartName());
         statement.setInt(2, o.getPartQuantity());
-        statement.setString(3, o.getOrderStatus());
+        statement.setString(3, o.getOrderStatus().toString()); // Convert Status to String
         statement.setDouble(4, o.getPrice());
-        statement.setDate(5, o.getEstimatedArrival());
+        statement.setDate(5, new Date(o.getEstimatedArrival().getTime())); // Convert java.util.Date to java.sql.Date
 
         statement.executeUpdate();
         statement.close();
@@ -31,7 +33,7 @@ public class OrderDAOMySQL implements OrderDAO {
     @Override
     public Order loadOrder(long orderId) throws SQLException {
         String query = "SELECT id, partName, partQuantity, orderStatus, price, estimatedArrival "
-                       + "FROM order WHERE id = ?";
+                       + "FROM `order` WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
@@ -46,9 +48,9 @@ public class OrderDAOMySQL implements OrderDAO {
                 resultSet.getLong("id"),
                 resultSet.getString("partName"),
                 resultSet.getInt("partQuantity"),
-                resultSet.getString("orderStatus"),
+                Status.fromValue(resultSet.getString("orderStatus")), // Convert String to Status
                 resultSet.getDouble("price"),
-                resultSet.getDate("estimatedArrival")
+                resultSet.getDate("estimatedArrival") // Use java.sql.Date directly
             );
         }
 
@@ -58,7 +60,7 @@ public class OrderDAOMySQL implements OrderDAO {
 
     @Override
     public boolean deleteOrder(long orderId) throws SQLException {
-        String query = "DELETE FROM order WHERE id = ?";
+        String query = "DELETE FROM `order` WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
@@ -73,7 +75,7 @@ public class OrderDAOMySQL implements OrderDAO {
 
     @Override
     public void updateOrder(Order order) throws SQLException {
-        String query = "UPDATE order SET partName = ?, partQuantity = ?, orderStatus = ?, "
+        String query = "UPDATE `order` SET partName = ?, partQuantity = ?, orderStatus = ?, "
                        + "price = ?, estimatedArrival = ? WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
@@ -81,9 +83,9 @@ public class OrderDAOMySQL implements OrderDAO {
 
         statement.setString(1, order.getPartName());
         statement.setInt(2, order.getPartQuantity());
-        statement.setString(3, order.getOrderStatus());
+        statement.setString(3, order.getOrderStatus().toString()); // Convert Status to String
         statement.setDouble(4, order.getPrice());
-        statement.setDate(5, order.getEstimatedArrival());
+        statement.setDate(5, new Date(order.getEstimatedArrival().getTime())); // Convert java.util.Date to java.sql.Date
         statement.setLong(6, order.getId());
 
         statement.executeUpdate();
@@ -93,7 +95,7 @@ public class OrderDAOMySQL implements OrderDAO {
     @Override
     public List<Order> loadAllOrders() throws SQLException {
         List<Order> orders = new ArrayList<>();
-        String query = "SELECT id, partName, partQuantity, orderStatus, price, estimatedArrival FROM order";
+        String query = "SELECT id, partName, partQuantity, orderStatus, price, estimatedArrival FROM `order`";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
@@ -105,14 +107,13 @@ public class OrderDAOMySQL implements OrderDAO {
                 resultSet.getLong("id"),
                 resultSet.getString("partName"),
                 resultSet.getInt("partQuantity"),
-                resultSet.getString("orderStatus"),
+                Status.fromValue(resultSet.getString("orderStatus")), // Convert String to Status
                 resultSet.getDouble("price"),
-                resultSet.getDate("estimatedArrival")
+                resultSet.getDate("estimatedArrival") // Use java.sql.Date directly
             ));
         }
 
         statement.close();
         return orders;
     }
-
 }

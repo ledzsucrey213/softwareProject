@@ -6,7 +6,7 @@ module com.autocare.autocare {
     requires java.sql;
     requires junit;
 
-    opens com.autocare.autocare to javafx.fxml;
+    opens com.autocare to javafx.fxml;
 
     exports com.autocare.autocare;
     exports com.autocare.login.test;

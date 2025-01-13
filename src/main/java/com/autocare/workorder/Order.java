@@ -7,11 +7,15 @@ import java.util.*;
  */
 public class Order {
 
-    /**
-     * Default constructor
-     */
-    public Order() {
-    }
+	public Order(long id, String partName, int partQuantity, Status status, double price, Date estimatedArrival) {
+	    this.id = id;
+	    this.partName = partName;
+	    this.partQuantity = partQuantity;
+	    this.orderStatus = status;
+	    this.price = price;
+	    this.estimatedArrival = estimatedArrival;
+	}
+
 
     private long id;
     private String partName;
@@ -20,13 +24,7 @@ public class Order {
     private Status orderStatus;
     public Date estimatedArrival;
 
-    public Order(long id, String partName, int partQuantity, Status status, Date arrival) {
-        this.id = id;
-        this.partName = partName;
-        this.partQuantity = partQuantity;
-        this.orderStatus = status;
-        this.estimatedArrival = arrival;
-    }
+ 
 
     public long getId() {
         return this.id;
@@ -37,7 +35,7 @@ public class Order {
     }
 
     
-    public int getPrice() {
+    public double getPrice() {
         return this.price;
     }
 
