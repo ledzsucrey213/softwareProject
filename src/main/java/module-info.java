@@ -9,7 +9,6 @@ module com.autocare.autocare {
     opens com.autocare.autocare to javafx.fxml;
 
     exports com.autocare.autocare;
-    exports com.autocare.login.test;
     exports com.autocare.clientsubscription.ui;
     opens com.autocare.subscription to javafx.base;
     opens com.autocare.subscription.service to javafx.base;

@@ -1,6 +1,9 @@
-DROP DATABASE if exists CarService;
-CREATE database CarService;
-use CarService;
+DROP
+DATABASE if exists CarService;
+CREATE
+database CarService;
+use
+CarService;
 DROP TABLE IF EXISTS cars_in_garage;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS subscription;
@@ -14,10 +17,10 @@ DROP TABLE IF EXISTS transaction;
 CREATE TABLE user
 (
     ID_user  INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username varchar(50) UNIQUE                    NOT NULL,
-    name     VARCHAR(50)                           NOT NULL,
-    surname  VARCHAR(50)                           NOT NULL,
-    password VARCHAR(255)                          NOT NULL,
+    username varchar(50) UNIQUE NOT NULL,
+    name     VARCHAR(50)        NOT NULL,
+    surname  VARCHAR(50)        NOT NULL,
+    password VARCHAR(255)       NOT NULL,
     role     ENUM ('ADMIN', 'MANAGER', 'CLIENT') NOT NULL
 );
 
@@ -30,8 +33,8 @@ CREATE TABLE brand
 CREATE TABLE vehicle
 (
     id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    year        YEAR                                                                            NOT NULL,
-    color       VARCHAR(50)                                                                     NOT NULL,
+    year YEAR                                                                            NOT NULL,
+    color       VARCHAR(50) NOT NULL,
     type        ENUM (
         'Sedan',
         'Hatchback',
@@ -90,17 +93,18 @@ CREATE TABLE subscription
 (
     id          INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     type        ENUM ('Monthly', 'Yearly') NOT NULL,
-    label       VARCHAR(255)               NOT NULL,
-    is_active   BOOLEAN                    NOT NULL,
-    amount      DECIMAL(10, 2)             NOT NULL,
+    label       VARCHAR(255)   NOT NULL,
+    is_active   BOOLEAN        NOT NULL,
+    amount      DECIMAL(10, 2) NOT NULL,
     description TEXT
 );
 
-CREATE TABLE payment_type (
-  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-  label varchar(50) NOT NULL,
-  fees DOUBLE NOT NULL,
-  isAvailable BOOLEAN NOT NULL
+CREATE TABLE payment_type
+(
+    id          INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    label       varchar(50) NOT NULL,
+    fees DOUBLE NOT NULL,
+    isAvailable BOOLEAN     NOT NULL
 );
 
 CREATE TABLE item
@@ -108,7 +112,7 @@ CREATE TABLE item
     id          INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     label       varchar(50)  NOT NULL,
     description varchar(255) NOT NULL DEFAULT '',
-    price       DOUBLE       NOT NULL
+    price DOUBLE NOT NULL
 );
 
 CREATE TABLE cart
@@ -133,7 +137,7 @@ INSERT INTO user (ID_user, username, name, surname, role, password)
 VALUES (1, 'john_doe', 'John', 'Doe', 'ADMIN', 'john.doe'),
        (2, 'jane_smith', 'Jane', 'Smith', 'ADMIN', 'jane.smith'),
        (3, 'alice_johnson', 'Alice', 'Johnson', 'ADMIN', 'alice.johnson'),
-        (4, 'omaritto', 'Omar', 'EL BAF', 'ADMIN', 'OB');
+       (4, 'omaritto', 'Omar', 'EL BAF', 'ADMIN', 'OB');
 
 
 
@@ -194,64 +198,72 @@ VALUES (2023, 'Red', 'SUV', 'GASOLINE', 2500, 1, 'RAV4'),
        (2021, 'Green', 'Motorhome', 'GASOLINE', 4000, 18, 'Sprinter Van'),
        (2023, 'Red', 'Tractor', 'DIESEL', 5000, 19, 'John Deere');
 
-INSERT INTO item (label, description, price) VALUES
-                                                 ('Car Seat Cover', 'Protects your car seats from spills and dirt.', 19.99),
-                                                 ('Steering Wheel Cover', 'Adds comfort and protects the steering wheel.', 14.99),
-                                                 ('Dashboard Camera', 'Records the road for security and insurance purposes.', 59.99),
-                                                 ('Blind Spot Mirrors', 'Helps eliminate blind spots for safer driving.', 7.99),
-                                                 ('GPS Navigation System', 'Helps you find your way with turn-by-turn navigation.', 99.99),
-                                                 ('Car Phone Mount', 'Conveniently holds your phone while driving.', 9.99),
-                                                 ('Sunshade for Windshield', 'Blocks UV rays and keeps the car cooler.', 12.99),
-                                                 ('Car Organizer', 'Keeps your car interior neat and tidy.', 15.99),
-                                                 ('Bluetooth Car Adapter', 'Adds Bluetooth functionality to your car stereo.', 19.99),
-                                                 ('LED Headlights', 'Upgrade your car’s lighting to brighter LED headlights.', 49.99),
-                                                 ('Floor Mats', 'Protects your car floor from dirt and moisture.', 24.99),
-                                                 ('Car Air Purifier', 'Improves air quality inside your car by filtering out dust and allergens.', 39.99),
-                                                 ('Portable Jump Starter', 'Helps jump-start your car when the battery is dead.', 69.99),
-                                                 ('Trunk Organizer', 'Keeps your trunk organized and tidy.', 18.99),
-                                                 ('Car Cleaning Kit', 'Includes tools to clean every corner of your car.', 22.99),
-                                                 ('Tire Pressure Gauge', 'Measures your tire pressure to ensure optimal safety.', 5.99),
-                                                 ('Windshield Wiper Blades', 'Replaces old and worn windshield wipers.', 14.99),
-                                                 ('Car Vacuum Cleaner', 'Helps keep your car clean by removing dirt and debris.', 29.99),
-                                                 ('Backseat Car Mirror', 'Provides a view of your rear-facing child.', 11.99),
-                                                 ('Car Battery Charger', 'Charges your car’s battery when needed.', 49.99),
-                                                 ('Car Cover', 'Protects your car from the elements when parked outside.', 39.99),
-                                                 ('Parking Sensor System', 'Alerts you when objects are near your car during parking.', 79.99),
-                                                 ('Fog Lights', 'Improves visibility in foggy weather conditions.', 34.99),
-                                                 ('Roof Rack', 'Provides extra storage space on top of your car.', 99.99),
-                                                 ('Cargo Net', 'Helps secure items in the trunk or cargo area.', 14.99),
-                                                 ('Key Finder', 'Helps you locate your car keys with the press of a button.', 19.99),
-                                                 ('Car Seat Protector', 'Protects your car’s upholstery from child car seats.', 12.99),
-                                                 ('Portable Car Heater', 'Provides warmth in cold weather for your car’s interior.', 27.99),
-                                                 ('Windshield Repair Kit', 'Allows you to repair small cracks in your windshield.', 16.99),
-                                                 ('Oil Change Kit', 'Provides tools and oil for changing your car’s oil at home.', 34.99),
-                                                 ('Car Wax', 'Adds a protective layer and shine to your car’s paint.', 24.99),
-                                                 ('Car Jump Leads', 'Provides jump-start capability for other vehicles.', 12.99),
-                                                 ('Luggage Carrier', 'Conveniently stores extra luggage on your car’s roof.', 89.99),
-                                                 ('Seat Belt Cutter & Window Breaker', 'Emergency tool for escaping a trapped car.', 11.99),
-                                                 ('LED Strip Lights', 'Adds stylish LED lights to the interior of your car.', 29.99),
-                                                 ('Tire Repair Kit', 'Helps fix flat tires with patches and a pump.', 19.99),
-                                                 ('Sunglasses Holder', 'Conveniently stores your sunglasses in the car.', 7.99),
-                                                 ('Car Cup Holder Expander', 'Adds extra cup holders to your car for convenience.', 9.99),
-                                                 ('Magnetic Phone Holder', 'Mounts your phone to the dashboard with a magnetic holder.', 6.99),
-                                                 ('License Plate Frame', 'Customizable frame to enhance the appearance of your license plate.', 10.99),
-                                                 ('Portable Car Fridge', 'Keeps drinks and snacks cold during long trips.', 79.99),
-                                                 ('Car Air Freshener', 'Keeps your car smelling fresh and pleasant.', 4.99),
-                                                 ('Headrest Hooks', 'Hangs your bags or clothes on the headrest hooks.', 8.99),
-                                                 ('All-Weather Floor Mats', 'Heavy-duty floor mats for year-round protection.', 39.99);
+INSERT INTO item (label, description, price)
+VALUES ('Car Seat Cover', 'Protects your car seats from spills and dirt.', 19.99),
+       ('Steering Wheel Cover', 'Adds comfort and protects the steering wheel.', 14.99),
+       ('Dashboard Camera', 'Records the road for security and insurance purposes.', 59.99),
+       ('Blind Spot Mirrors', 'Helps eliminate blind spots for safer driving.', 7.99),
+       ('GPS Navigation System', 'Helps you find your way with turn-by-turn navigation.', 99.99),
+       ('Car Phone Mount', 'Conveniently holds your phone while driving.', 9.99),
+       ('Sunshade for Windshield', 'Blocks UV rays and keeps the car cooler.', 12.99),
+       ('Car Organizer', 'Keeps your car interior neat and tidy.', 15.99),
+       ('Bluetooth Car Adapter', 'Adds Bluetooth functionality to your car stereo.', 19.99),
+       ('LED Headlights', 'Upgrade your car’s lighting to brighter LED headlights.', 49.99),
+       ('Floor Mats', 'Protects your car floor from dirt and moisture.', 24.99),
+       ('Car Air Purifier', 'Improves air quality inside your car by filtering out dust and allergens.', 39.99),
+       ('Portable Jump Starter', 'Helps jump-start your car when the battery is dead.', 69.99),
+       ('Trunk Organizer', 'Keeps your trunk organized and tidy.', 18.99),
+       ('Car Cleaning Kit', 'Includes tools to clean every corner of your car.', 22.99),
+       ('Tire Pressure Gauge', 'Measures your tire pressure to ensure optimal safety.', 5.99),
+       ('Windshield Wiper Blades', 'Replaces old and worn windshield wipers.', 14.99),
+       ('Car Vacuum Cleaner', 'Helps keep your car clean by removing dirt and debris.', 29.99),
+       ('Backseat Car Mirror', 'Provides a view of your rear-facing child.', 11.99),
+       ('Car Battery Charger', 'Charges your car’s battery when needed.', 49.99),
+       ('Car Cover', 'Protects your car from the elements when parked outside.', 39.99),
+       ('Parking Sensor System', 'Alerts you when objects are near your car during parking.', 79.99),
+       ('Fog Lights', 'Improves visibility in foggy weather conditions.', 34.99),
+       ('Roof Rack', 'Provides extra storage space on top of your car.', 99.99),
+       ('Cargo Net', 'Helps secure items in the trunk or cargo area.', 14.99),
+       ('Key Finder', 'Helps you locate your car keys with the press of a button.', 19.99),
+       ('Car Seat Protector', 'Protects your car’s upholstery from child car seats.', 12.99),
+       ('Portable Car Heater', 'Provides warmth in cold weather for your car’s interior.', 27.99),
+       ('Windshield Repair Kit', 'Allows you to repair small cracks in your windshield.', 16.99),
+       ('Oil Change Kit', 'Provides tools and oil for changing your car’s oil at home.', 34.99),
+       ('Car Wax', 'Adds a protective layer and shine to your car’s paint.', 24.99),
+       ('Car Jump Leads', 'Provides jump-start capability for other vehicles.', 12.99),
+       ('Luggage Carrier', 'Conveniently stores extra luggage on your car’s roof.', 89.99),
+       ('Seat Belt Cutter & Window Breaker', 'Emergency tool for escaping a trapped car.', 11.99),
+       ('LED Strip Lights', 'Adds stylish LED lights to the interior of your car.', 29.99),
+       ('Tire Repair Kit', 'Helps fix flat tires with patches and a pump.', 19.99),
+       ('Sunglasses Holder', 'Conveniently stores your sunglasses in the car.', 7.99),
+       ('Car Cup Holder Expander', 'Adds extra cup holders to your car for convenience.', 9.99),
+       ('Magnetic Phone Holder', 'Mounts your phone to the dashboard with a magnetic holder.', 6.99),
+       ('License Plate Frame', 'Customizable frame to enhance the appearance of your license plate.', 10.99),
+       ('Portable Car Fridge', 'Keeps drinks and snacks cold during long trips.', 79.99),
+       ('Car Air Freshener', 'Keeps your car smelling fresh and pleasant.', 4.99),
+       ('Headrest Hooks', 'Hangs your bags or clothes on the headrest hooks.', 8.99),
+       ('All-Weather Floor Mats', 'Heavy-duty floor mats for year-round protection.', 39.99);
 
 
 INSERT INTO payment_type (label, fees, isAvailable)
-VALUES
-    ('Credit Card', 2.5, TRUE),
-    ('Debit Card', 1.5, TRUE),
-    ('PayPal', 3.0, TRUE),
-    ('Apple Pay', 2.0, TRUE),
-    ('Google Pay', 2.0, TRUE),
-    ('Bank Transfer', 0.5, TRUE),
-    ('Cash', 0.0, TRUE),
-    ('Cryptocurrency', 1.8, FALSE),
-    ('Check', 0.7, TRUE),
-    ('Gift Card', 0.0, TRUE),
-    ('Stripe', 2.9, TRUE),
-    ('Venmo', 1.2, TRUE);
+VALUES ('Credit Card', 2.5, TRUE),
+       ('Debit Card', 1.5, TRUE),
+       ('PayPal', 3.0, TRUE),
+       ('Apple Pay', 2.0, TRUE),
+       ('Google Pay', 2.0, TRUE),
+       ('Bank Transfer', 0.5, TRUE),
+       ('Cash', 0.0, TRUE),
+       ('Cryptocurrency', 1.8, FALSE),
+       ('Check', 0.7, TRUE),
+       ('Gift Card', 0.0, TRUE),
+       ('Stripe', 2.9, TRUE),
+       ('Venmo', 1.2, TRUE);
+
+CREATE TABLE client_subscription
+(
+    id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    client_id       INT UNSIGNED NOT NULL,
+    subscription_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES user (ID_user) ON DELETE CASCADE,
+    FOREIGN KEY (subscription_id) REFERENCES subscription (id) ON DELETE CASCADE
+);
