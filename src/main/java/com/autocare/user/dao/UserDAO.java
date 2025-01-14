@@ -20,8 +20,10 @@ public interface UserDAO {
     void deleteUser(long userId) throws SQLException;
 
     void updateUser(User user) throws SQLException;
-    
-    List<User> loadClients() throws SQLException ;
 
+    // Method to load clients (users with role CLIENT)
+    List<User> loadClients() throws SQLException;
 
+    // Method to load a user by their ID
+    Optional<User> loadUserById(long id) throws SQLException;
 }

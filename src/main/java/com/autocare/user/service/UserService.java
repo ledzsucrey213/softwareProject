@@ -87,5 +87,16 @@ public class UserService {
     public List<User> getClients() throws SQLException {
         return userDAO.loadClients();
     }
+    /**
+     * Retrieves a user by their ID.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return An {@link Optional} containing the user if found, or an empty {@link Optional} otherwise.
+     * @throws SQLException If a database error occurs during the retrieval of the user.
+     */
+    public Optional<User> getUserById(long id) throws SQLException {
+        return userDAO.loadUserById(id);
+    }
+
 
 }

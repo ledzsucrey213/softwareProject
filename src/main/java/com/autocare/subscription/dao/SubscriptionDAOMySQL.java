@@ -156,5 +156,31 @@ public class SubscriptionDAOMySQL implements SubscriptionDAO {
             preparedStatement.setLong(6, subscription.getId().get());
             preparedStatement.executeUpdate();
     }
+    @Override
+    public Subscription loadSubscriptionById(long id) throws SQLException {
+        String query = "SELECT id, type, label, is_active, amount, description FROM subscription WHERE id = ?";
+        Subscription subscription = null;
+
+        try (Connection connection = SqlConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                subscription = new Subscription(
+                    resultSet.getLong("id"),
+                    SubscriptionType.valueOf(resultSet.getString("type").toUpperCase()), // Conversion
+                    resultSet.getString("label"),
+                    resultSet.getBoolean("is_active"),
+                    resultSet.getDouble("amount"),
+                    resultSet.getString("description")
+                );
+            }
+        }
+
+        return subscription;
+    }
+
+
 
 }

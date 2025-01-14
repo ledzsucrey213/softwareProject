@@ -25,5 +25,9 @@ public class ClientSubscriptionService {
     public void deleteClientSubscription(long clientId, long subscriptionId) throws SQLException {
         clientSubscriptionDAO.deleteClientSubscription(clientId, subscriptionId);
     }
+    public List<ClientSubscription> getAllClientSubscriptions() throws SQLException {
+        return clientSubscriptionDAO.getAllClientSubscriptions();
+    }
+
 }
 

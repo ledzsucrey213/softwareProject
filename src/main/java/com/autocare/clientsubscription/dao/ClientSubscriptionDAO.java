@@ -10,4 +10,6 @@ public interface ClientSubscriptionDAO {
     List<ClientSubscription> getSubscriptionsByClientId(long clientId) throws SQLException;
     List<ClientSubscription> getClientsBySubscriptionId(long subscriptionId) throws SQLException;
     void deleteClientSubscription(long clientId, long subscriptionId) throws SQLException;
+    List<ClientSubscription> getAllClientSubscriptions() throws SQLException;
+
 }

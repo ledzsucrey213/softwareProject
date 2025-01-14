@@ -229,6 +229,30 @@ public class UserMySqlDAO implements UserDAO {
         }
         return clients;
     }
+    @Override
+    public Optional<User> loadUserById(long id) throws SQLException {
+        String query = "SELECT * FROM user WHERE ID_user = ?";
+        Optional<User> user = Optional.empty();
+
+        try (Connection connection = SqlConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = Optional.of(new User(
+                        resultSet.getLong("ID_user"),
+                        resultSet.getString("username"),
+                        Role.fromValue(resultSet.getString("role").trim()),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname")
+                ));
+            }
+        }
+
+        return user;
+    }
+
 
 }
 

@@ -15,5 +15,7 @@ public interface SubscriptionDAO {
     void deleteSubscription(long subscriptionId) throws SQLException;
 
     void update(Subscription subscription) throws SQLException;
+    Subscription loadSubscriptionById(long id) throws SQLException;
+
 
 }

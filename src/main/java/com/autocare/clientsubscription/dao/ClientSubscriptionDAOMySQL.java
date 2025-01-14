@@ -68,5 +68,26 @@ public class ClientSubscriptionDAOMySQL implements ClientSubscriptionDAO {
             statement.executeUpdate();
         }
     }
+    @Override
+    public List<ClientSubscription> getAllClientSubscriptions() throws SQLException {
+        String query = "SELECT * FROM client_subscription";
+        List<ClientSubscription> clientSubscriptions = new ArrayList<>();
+
+        try (Connection connection = SqlConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                clientSubscriptions.add(new ClientSubscription(
+                        resultSet.getLong("id"),                // ID de la liaison
+                        resultSet.getLong("client_id"),         // ID du client
+                        resultSet.getLong("subscription_id")    // ID de l'abonnement
+                ));
+            }
+        }
+
+        return clientSubscriptions;
+    }
+
 }
 

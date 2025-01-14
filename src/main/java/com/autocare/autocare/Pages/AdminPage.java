@@ -1,10 +1,16 @@
 package com.autocare.autocare.Pages;
 
+import com.autocare.clientsubscription.ui.ClientSubscriptionView;
+import com.autocare.clientsubscription.service.ClientSubscriptionService;
 import com.autocare.payment.ui.ManagePaymentTypeView;
 import com.autocare.subscription.ui.SubscriptionView;
+import com.autocare.subscription.service.SubscriptionService;
 import com.autocare.user.ui.ManageUsersView;
+import com.autocare.user.service.UserService;
 import com.autocare.vehicle.ui.VehicleView;
-import com.autocare.clientsubscription.ui.ClientSubscriptionView;
+import com.autocare.clientsubscription.factory.ClientSubscriptionDAOFactoryMySQL;
+import com.autocare.subscription.factory.SubscriptionDAOMySQLFactory;
+import com.autocare.user.factory.UserDAOMySQLFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -30,7 +36,7 @@ public class AdminPage {
         addEditUserListButton.setStyle("-fx-font-size: 14px;");
         defineVehiclesButton.setStyle("-fx-font-size: 14px;");
         defineSubscriptionsButton.setStyle("-fx-font-size: 14px;");
-        manageClientSubscriptionsButton.setStyle("-fx-font-size: 14px;"); // Style for the new button
+        manageClientSubscriptionsButton.setStyle("-fx-font-size: 14px;");
         logoutButton.setStyle("-fx-font-size: 14px; -fx-background-color: red; -fx-text-fill: white;");
 
         // Layout
@@ -39,12 +45,17 @@ public class AdminPage {
         layout.setPadding(new Insets(20));
         layout.setStyle("-fx-background-color: #34495e;");
 
-        // Interfaces
+        // Initialize other views
         ManagePaymentTypeView paymentInterface = new ManagePaymentTypeView();
         ManageUsersView userInterface = new ManageUsersView();
         VehicleView vehicleInterface = new VehicleView();
         SubscriptionView subscriptionInterface = new SubscriptionView();
-        ClientSubscriptionView clientSubscriptionInterface = new ClientSubscriptionView(); // Interface for the new use case
+
+        // Initialize ClientSubscriptionView with services
+        ClientSubscriptionService clientSubscriptionService = new ClientSubscriptionService(new ClientSubscriptionDAOFactoryMySQL());
+        SubscriptionService subscriptionService = new SubscriptionService(new SubscriptionDAOMySQLFactory());
+        UserService userService = new UserService(new UserDAOMySQLFactory());
+        ClientSubscriptionView clientSubscriptionInterface = new ClientSubscriptionView(clientSubscriptionService, subscriptionService, userService);
 
         // Button actions (open as popups)
         definePaymentTypesButton.setOnAction(e -> {
@@ -78,7 +89,7 @@ public class AdminPage {
         manageClientSubscriptionsButton.setOnAction(e -> {
             Stage clientSubscriptionPopup = new Stage();
             clientSubscriptionPopup.setTitle("Manage Client Subscriptions");
-            clientSubscriptionPopup.setScene(clientSubscriptionInterface.createClientSubscriptionScene()); // Method to create the UI for client subscriptions
+            clientSubscriptionPopup.setScene(clientSubscriptionInterface.createClientSubscriptionScene());
             clientSubscriptionPopup.show();
         });
 

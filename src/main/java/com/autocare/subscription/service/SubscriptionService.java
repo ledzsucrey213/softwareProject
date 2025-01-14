@@ -79,5 +79,9 @@ public class SubscriptionService {
     throws SQLException {
         subscriptionDAO.update(subscription);
     }
+    public Subscription getSubscriptionById(long id) throws SQLException {
+        return subscriptionDAO.loadSubscriptionById(id);
+    }
+
 
 }
