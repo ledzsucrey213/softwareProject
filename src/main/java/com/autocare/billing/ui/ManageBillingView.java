@@ -15,6 +15,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
 
 public class ManageBillingView {
 
@@ -35,24 +38,30 @@ public class ManageBillingView {
     }
 
     public Scene createBillingScene(Stage primaryStage) {
-        // TableView
+        // TableView configuration
         TableView<Bill> billTable = new TableView<>();
         billTable.setItems(bills);
         billTable.setPrefHeight(300);
 
-        TableColumn<Bill, String> dateCol = new TableColumn<>("Date");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        TableColumn<Bill, Long> idCol = new TableColumn<>("ID");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Bill, String> clientCol = new TableColumn<>("Client");
-        clientCol.setCellValueFactory(new PropertyValueFactory<>("clientName"));
+        TableColumn<Bill, Integer> clientIdCol = new TableColumn<>("Client ID");
+        clientIdCol.setCellValueFactory(new PropertyValueFactory<>("clientId"));
 
         TableColumn<Bill, String> serviceCol = new TableColumn<>("Service");
         serviceCol.setCellValueFactory(new PropertyValueFactory<>("serviceType"));
 
-        TableColumn<Bill, Double> totalCol = new TableColumn<>("Total");
-        totalCol.setCellValueFactory(new PropertyValueFactory<>("totalAmount"));
+        TableColumn<Bill, Date> dateCol = new TableColumn<>("Date");
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("billDate"));
 
-        billTable.getColumns().addAll(dateCol, clientCol, serviceCol, totalCol);
+        TableColumn<Bill, String> statusCol = new TableColumn<>("Status");
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("billStatus"));
+
+        TableColumn<Bill, Double> costCol = new TableColumn<>("Cost");
+        costCol.setCellValueFactory(new PropertyValueFactory<>("cost"));
+
+        billTable.getColumns().addAll(idCol, clientIdCol, serviceCol, dateCol, statusCol, costCol);
 
         // Buttons
         Button addBillButton = new Button("Add New");
@@ -70,7 +79,7 @@ public class ManageBillingView {
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.CENTER);
 
-        return new Scene(layout, 600, 400);
+        return new Scene(layout, 800, 600);
     }
 
     private void openAddBillDialog() {
@@ -131,8 +140,8 @@ public class ManageBillingView {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(20, 150, 10, 10));
 
-        TextField clientField = new TextField();
-        clientField.setPromptText("Client Name");
+        TextField clientIdField = new TextField();
+        clientIdField.setPromptText("Client ID");
 
         TextField dateField = new TextField();
         dateField.setPromptText("Date (YYYY-MM-DD)");
@@ -140,24 +149,30 @@ public class ManageBillingView {
         TextField serviceField = new TextField();
         serviceField.setPromptText("Service Type");
 
-        TextField totalField = new TextField();
-        totalField.setPromptText("Total Amount");
+        TextField statusField = new TextField();
+        statusField.setPromptText("Status");
+
+        TextField costField = new TextField();
+        costField.setPromptText("Cost");
 
         if (existingBill != null) {
-            clientField.setText(existingBill.getClientName());
-            dateField.setText(existingBill.getDate());
+            clientIdField.setText(String.valueOf(existingBill.getClientId()));
+            dateField.setText(new SimpleDateFormat("yyyy-MM-dd").format(existingBill.getBillDate()));
             serviceField.setText(existingBill.getServiceType());
-            totalField.setText(String.valueOf(existingBill.getTotalAmount()));
+            statusField.setText(existingBill.getBillStatus());
+            costField.setText(String.valueOf(existingBill.getCost()));
         }
 
-        gridPane.add(new Label("Client Name:"), 0, 0);
-        gridPane.add(clientField, 1, 0);
+        gridPane.add(new Label("Client ID:"), 0, 0);
+        gridPane.add(clientIdField, 1, 0);
         gridPane.add(new Label("Date:"), 0, 1);
         gridPane.add(dateField, 1, 1);
         gridPane.add(new Label("Service Type:"), 0, 2);
         gridPane.add(serviceField, 1, 2);
-        gridPane.add(new Label("Total Amount:"), 0, 3);
-        gridPane.add(totalField, 1, 3);
+        gridPane.add(new Label("Status:"), 0, 3);
+        gridPane.add(statusField, 1, 3);
+        gridPane.add(new Label("Cost:"), 0, 4);
+        gridPane.add(costField, 1, 4);
 
         dialog.getDialogPane().setContent(gridPane);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -167,13 +182,14 @@ public class ManageBillingView {
                 try {
                     return new Bill(
                             existingBill != null ? existingBill.getId() : 0,
-                            clientField.getText(),
-                            dateField.getText(),
+                            Integer.parseInt(clientIdField.getText()),
                             serviceField.getText(),
-                            Double.parseDouble(totalField.getText())
+                            new SimpleDateFormat("yyyy-MM-dd").parse(dateField.getText()),
+                            statusField.getText(),
+                            Double.parseDouble(costField.getText())
                     );
-                } catch (NumberFormatException e) {
-                    showAlert("Error", "Invalid input for total amount.", Alert.AlertType.ERROR);
+                } catch (Exception e) {
+                    showAlert("Error", "Invalid input: " + e.getMessage(), Alert.AlertType.ERROR);
                 }
             }
             return null;

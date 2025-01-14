@@ -42,10 +42,7 @@ public class ScheduleAppointmentView {
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> primaryStage.setScene(previousScene()));
 
-        Button proceedButton = new Button("Proceed");
-        proceedButton.setDisable(true); // Disabled until availability is confirmed
-
-        calendarBox.getChildren().add(proceedButton);
+        calendarBox.getChildren().add(backButton);
 
         VBox layout = new VBox(20, titleLabel, calendarBox);
         layout.setPadding(new Insets(20));
@@ -118,7 +115,8 @@ public class ScheduleAppointmentView {
             long userId = 1; // Replace with actual user ID logic
             String description = "Service: " + serviceType + ", Vehicle: " + vehicleDetails;
 
-            appointmentService.scheduleAppointment(date, time, userId, description);
+            Appointment appointment = new Appointment(date, time, userId, false, description);
+            appointmentService.scheduleAppointment(appointment);
 
             showConfirmationScreen(primaryStage, date, time, name, phone, serviceType, vehicleDetails);
         } catch (Exception e) {
@@ -161,7 +159,7 @@ public class ScheduleAppointmentView {
     }
 
     private Scene previousScene() {
-        // Logic to return to the previous scene
+        // Placeholder logic for the previous scene
         return null;
     }
 }

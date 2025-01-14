@@ -15,6 +15,7 @@ public class LoyaltyProgramView {
 
     private final LoyaltyProgramService loyaltyProgramService;
     private final ObservableList<String> rewardsList = FXCollections.observableArrayList();
+    private TextField pointsField;
 
     public LoyaltyProgramView() {
         loyaltyProgramService = new LoyaltyProgramService();
@@ -36,8 +37,8 @@ public class LoyaltyProgramView {
         clientInputBox.setAlignment(Pos.CENTER);
 
         // Loyalty Program Details
-        Label pointsLabel = new Label("Points: ");
-        TextField pointsField = new TextField();
+        Label pointsLabel = new Label("Points:");
+        pointsField = new TextField();
         pointsField.setEditable(false);
 
         TableView<String> rewardsTable = new TableView<>();
@@ -73,9 +74,10 @@ public class LoyaltyProgramView {
 
     private void loadLoyaltyProgram(String clientIdText) {
         try {
-            Long clientId = Long.parseLong(clientIdText);
+            Long clientId = parseClientId(clientIdText);
             LoyaltyProgram loyaltyProgram = loyaltyProgramService.getLoyaltyProgram(clientId);
 
+            pointsField.setText(String.valueOf(loyaltyProgram.getPoints()));
             rewardsList.setAll(loyaltyProgram.getRewards());
             showAlert("Success", "Loyalty program loaded successfully.", Alert.AlertType.INFORMATION);
         } catch (NumberFormatException e) {
@@ -87,10 +89,11 @@ public class LoyaltyProgramView {
 
     private void updatePoints(String clientIdText, String pointsText) {
         try {
-            Long clientId = Long.parseLong(clientIdText);
+            Long clientId = parseClientId(clientIdText);
             int points = Integer.parseInt(pointsText);
 
             loyaltyProgramService.updatePoints(clientId, points);
+            pointsField.setText(String.valueOf(points));
             showAlert("Success", "Points updated successfully.", Alert.AlertType.INFORMATION);
         } catch (NumberFormatException e) {
             showAlert("Error", "Invalid input for Client ID or Points.", Alert.AlertType.ERROR);
@@ -106,7 +109,7 @@ public class LoyaltyProgramView {
         }
 
         try {
-            Long clientId = Long.parseLong(clientIdText);
+            Long clientId = parseClientId(clientIdText);
 
             loyaltyProgramService.redeemReward(clientId, rewardId);
             rewardsList.remove(rewardId);
@@ -125,7 +128,7 @@ public class LoyaltyProgramView {
         }
 
         try {
-            Long clientId = Long.parseLong(clientIdText);
+            Long clientId = parseClientId(clientIdText);
 
             loyaltyProgramService.reverseReward(clientId, rewardId);
             rewardsList.add(rewardId);
@@ -135,6 +138,13 @@ public class LoyaltyProgramView {
         } catch (IllegalArgumentException e) {
             showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    private Long parseClientId(String clientIdText) throws NumberFormatException {
+        if (clientIdText == null || clientIdText.trim().isEmpty()) {
+            throw new NumberFormatException("Client ID is required.");
+        }
+        return Long.parseLong(clientIdText.trim());
     }
 
     private void showAlert(String title, String message, Alert.AlertType type) {

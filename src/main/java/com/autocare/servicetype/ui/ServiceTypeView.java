@@ -26,8 +26,11 @@ public class ServiceTypeView {
     }
 
     private void loadServiceTypes() {
-        // Mock implementation for loading data into ObservableList (replace with actual DAO retrieval logic if required)
-        // serviceTypes.setAll(serviceTypeService.getAllServiceTypes());
+        try {
+            serviceTypes.setAll(serviceTypeService.getAllServiceTypes());
+        } catch (Exception e) {
+            showAlert("Error", "Failed to load service types: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     public Scene createServiceTypeScene(Stage primaryStage) {
@@ -69,9 +72,8 @@ public class ServiceTypeView {
 
     private void openAddServiceTypeDialog() {
         Dialog<ServiceType> dialog = createServiceTypeDialog("Add New Service Type", null);
-        dialog.setTitle("New Service Type");
-
         Optional<ServiceType> result = dialog.showAndWait();
+
         result.ifPresent(serviceType -> {
             try {
                 serviceTypeService.addServiceType(serviceType.getName(), serviceType.getDescription());
@@ -89,12 +91,11 @@ public class ServiceTypeView {
         }
 
         Dialog<ServiceType> dialog = createServiceTypeDialog("Update Service Type", selectedServiceType);
-        dialog.setTitle("Edit Service Type");
-
         Optional<ServiceType> result = dialog.showAndWait();
+
         result.ifPresent(serviceType -> {
             try {
-                serviceTypeService.updateServiceType(selectedServiceType.getId(), serviceType.getName(), serviceType.getDescription());
+                serviceTypeService.updateServiceType(selectedServiceType.getServiceTypeId(), serviceType.getName(), serviceType.getDescription());
                 serviceTypes.set(serviceTypes.indexOf(selectedServiceType), serviceType);
             } catch (Exception e) {
                 showAlert("Error", "Failed to update service type: " + e.getMessage(), Alert.AlertType.ERROR);
@@ -113,9 +114,8 @@ public class ServiceTypeView {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
-                // Replace with actual deletion logic
+                serviceTypeService.deleteServiceType(selectedServiceType.getServiceTypeId());
                 serviceTypes.remove(selectedServiceType);
-                showAlert("Success", "Service type deleted successfully.", Alert.AlertType.INFORMATION);
             } catch (Exception e) {
                 showAlert("Error", "Failed to delete service type: " + e.getMessage(), Alert.AlertType.ERROR);
             }
@@ -153,7 +153,7 @@ public class ServiceTypeView {
         dialog.setResultConverter(button -> {
             if (button == ButtonType.OK) {
                 return new ServiceType(
-                        existingServiceType != null ? existingServiceType.getId() : 0,
+                        existingServiceType != null ? existingServiceType.getServiceTypeId() : 0,
                         nameField.getText(),
                         descriptionField.getText()
                 );

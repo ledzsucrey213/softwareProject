@@ -3,6 +3,7 @@ package com.autocare.workorder.ui;
 import com.autocare.workorder.Order;
 import com.autocare.workorder.service.WorkOrderService;
 import com.autocare.workorder.factory.OrderAbstractFactory;
+import com.autocare.workorder.Status;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,12 +16,16 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 public class WorkOrderView {
 
     private final WorkOrderService workOrderService;
     private final ObservableList<Order> orders = FXCollections.observableArrayList();
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public WorkOrderView(OrderAbstractFactory orderFactory) {
         workOrderService = new WorkOrderService(orderFactory);
@@ -45,13 +50,13 @@ public class WorkOrderView {
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("partName"));
 
         TableColumn<Order, Integer> partQtyCol = new TableColumn<>("Quantity");
-        partQtyCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        partQtyCol.setCellValueFactory(new PropertyValueFactory<>("partQuantity"));
 
-        TableColumn<Order, String> statusCol = new TableColumn<>("Status");
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        TableColumn<Order, Status> statusCol = new TableColumn<>("Status");
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
 
-        TableColumn<Order, String> dateCol = new TableColumn<>("Arrival Date");
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("arrivalDate"));
+        TableColumn<Order, Date> dateCol = new TableColumn<>("Arrival Date");
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("estimatedArrival"));
 
         TableColumn<Order, Double> priceCol = new TableColumn<>("Price");
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -136,19 +141,19 @@ public class WorkOrderView {
         quantityField.setPromptText("Quantity");
 
         TextField statusField = new TextField();
-        statusField.setPromptText("Status");
+        statusField.setPromptText("Status (NotOrdered, InProgress, Arrived)");
 
         TextField arrivalDateField = new TextField();
-        arrivalDateField.setPromptText("Arrival Date");
+        arrivalDateField.setPromptText("Arrival Date (yyyy-MM-dd)");
 
         TextField priceField = new TextField();
         priceField.setPromptText("Price");
 
         if (existingOrder != null) {
             partNameField.setText(existingOrder.getPartName());
-            quantityField.setText(String.valueOf(existingOrder.getQuantity()));
-            statusField.setText(existingOrder.getStatus());
-            arrivalDateField.setText(existingOrder.getArrivalDate());
+            quantityField.setText(String.valueOf(existingOrder.getPartQuantity()));
+            statusField.setText(existingOrder.getOrderStatus().toString());
+            arrivalDateField.setText(dateFormat.format(existingOrder.getEstimatedArrival()));
             priceField.setText(String.valueOf(existingOrder.getPrice()));
         }
 
@@ -158,14 +163,20 @@ public class WorkOrderView {
 
         dialog.setResultConverter(button -> {
             if (button == ButtonType.OK) {
-                return new Order(
-                    existingOrder != null ? existingOrder.getId() : 0,
-                    partNameField.getText(),
-                    Integer.parseInt(quantityField.getText()),
-                    statusField.getText(),
-                    arrivalDateField.getText(),
-                    Double.parseDouble(priceField.getText())
-                );
+                try {
+                    return new Order(
+                        existingOrder != null ? existingOrder.getId() : 0,
+                        partNameField.getText(),
+                        Integer.parseInt(quantityField.getText()),
+                        Status.fromValue(statusField.getText()),
+                        Double.parseDouble(priceField.getText()),
+                        dateFormat.parse(arrivalDateField.getText())
+                    );
+                } catch (ParseException e) {
+                    showAlert("Error", "Invalid date format. Use yyyy-MM-dd.", Alert.AlertType.ERROR);
+                } catch (IllegalArgumentException e) {
+                    showAlert("Error", "Invalid status value. Use NotOrdered, InProgress, or Arrived.", Alert.AlertType.ERROR);
+                }
             }
             return null;
         });
