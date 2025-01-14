@@ -84,4 +84,8 @@ public class UserService {
     public Optional<User> getUser(String username , String password) throws SQLException {
         return userDAO.loadUser(username,password);
     }
+    public List<User> getClients() throws SQLException {
+        return userDAO.loadClients();
+    }
+
 }

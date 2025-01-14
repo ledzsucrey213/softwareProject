@@ -192,6 +192,44 @@ public class UserMySqlDAO implements UserDAO {
         // Clean up resources
         preparedStatement.close();
     }
+    /**
+     * Loads all users with the role 'CLIENT' from the database.
+     *
+     * @return A list of all {@link User} objects with the role 'CLIENT'.
+     * @throws SQLException If a database error occurs during the retrieval of users.
+     */
+    public List<User> loadClients() throws SQLException {
+        List<User> clients = new ArrayList<>();
+        String query = "SELECT u.ID_user, u.name, u.surname, u.username, u.role " +
+                       "FROM user u " +
+                       "WHERE u.role = 'CLIENT'"; // Filtrer uniquement les clients
+
+        try (Connection connection = SqlConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                long id = resultSet.getLong("ID_user");
+                String name = resultSet.getString("name");
+                String surname = resultSet.getString("surname");
+                String username = resultSet.getString("username");
+                String roleValue = resultSet.getString("role").trim();
+                Role role = Role.fromValue(roleValue);
+
+                // Créer un objet User et l'ajouter à la liste
+                User user = new User();
+                user.setId(id);
+                user.setName(name);
+                user.setSurname(surname);
+                user.setUsername(username);
+                user.setRole(role);
+
+                clients.add(user);
+            }
+        }
+        return clients;
+    }
+
 }
 
 

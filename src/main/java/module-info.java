@@ -10,10 +10,12 @@ module com.autocare.autocare {
 
     exports com.autocare.autocare;
     exports com.autocare.login.test;
+    exports com.autocare.clientsubscription.ui;
     opens com.autocare.subscription to javafx.base;
     opens com.autocare.subscription.service to javafx.base;
     opens com.autocare.user to javafx.base;
     opens com.autocare.payment to javafx.base;
+    opens com.autocare.clientsubscription.ui to javafx.base;
 
     opens com.autocare.transaction to javafx.base;
 }

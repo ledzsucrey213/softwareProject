@@ -20,5 +20,8 @@ public interface UserDAO {
     void deleteUser(long userId) throws SQLException;
 
     void updateUser(User user) throws SQLException;
+    
+    List<User> loadClients() throws SQLException ;
+
 
 }
