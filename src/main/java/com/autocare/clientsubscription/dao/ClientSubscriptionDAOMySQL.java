@@ -68,7 +68,6 @@ public class ClientSubscriptionDAOMySQL implements ClientSubscriptionDAO {
             statement.executeUpdate();
         }
     }
-    @Override
     public List<ClientSubscription> getAllClientSubscriptions() throws SQLException {
         String query = "SELECT * FROM client_subscription";
         List<ClientSubscription> clientSubscriptions = new ArrayList<>();
