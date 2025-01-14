@@ -1,3 +1,7 @@
+package com.autocare.billing.dao;
+
+import com.autocare.billing.Bill;
+
 import java.sql.SQLException;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-
+package com.autocare.workorder;
 
 public enum Status {
     NotOrdered,

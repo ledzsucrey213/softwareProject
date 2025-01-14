@@ -1,5 +1,6 @@
 package com.autocare.appointment.ui;
 
+import com.autocare.appointment.Appointment;
 import com.autocare.appointment.service.AppointmentService;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -116,7 +117,7 @@ public class ScheduleAppointmentView {
             String description = "Service: " + serviceType + ", Vehicle: " + vehicleDetails;
 
             Appointment appointment = new Appointment(date, time, userId, false, description);
-            appointmentService.scheduleAppointment(appointment);
+            appointmentService.scheduleAppointment(appointment.getDate() , appointment.getTime() , appointment.getUserId() , appointment.getDescription());
 
             showConfirmationScreen(primaryStage, date, time, name, phone, serviceType, vehicleDetails);
         } catch (Exception e) {

@@ -1,3 +1,4 @@
+package com.autocare.workorder;
 
 import java.io.*;
 import java.util.*;
@@ -55,7 +56,7 @@ public class Order {
         return this.partQuantity;
     }
 
-    public void setPartQuantity(String partQuantity) {
+    public void setPartQuantity(int partQuantity) {
         this.partQuantity = partQuantity;
     }
 
