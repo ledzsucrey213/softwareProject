@@ -63,4 +63,32 @@ public class ServiceTypeDAOMySQL implements ServiceTypeDAO {
             e.printStackTrace();
         }
     }
+    
+    
+    
+    @Override
+    public List<ServiceType> loadAllServiceTypes() throws SQLException {
+        List<ServiceType> serviceTypes = new ArrayList<>();
+        String query = "SELECT serviceTypeId, name, description FROM ServiceType";
+
+        try (Connection connection = SqlConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("serviceTypeId");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+
+                // Ajouter un nouvel objet ServiceType à la liste
+                serviceTypes.add(new ServiceType(id, name, description));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e; // Propager l'exception pour que l'appelant puisse la gérer
+        }
+
+        return serviceTypes;
+    }
+
 }

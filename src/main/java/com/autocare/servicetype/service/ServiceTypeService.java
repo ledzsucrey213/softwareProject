@@ -26,4 +26,8 @@ public class ServiceTypeService {
         serviceTypeDAO.saveServiceType(serviceType);
         return true;
     }
+    
+    public List<ServiceType> getAllServiceTypes() throws SQLException {
+        return serviceTypeDAO.loadAllServiceTypes();
+    }
 }
