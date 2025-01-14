@@ -1,5 +1,6 @@
 package com.autocare.billing.factory;
 
+import com.autocare.billing.dao.BillDAOMySQL;
 import com.autocare.billing.dao.BillingDAO;
 
 public interface BillingAbstractFactory {

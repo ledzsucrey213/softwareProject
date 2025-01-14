@@ -5,6 +5,7 @@ module com.autocare.autocare {
     requires org.controlsfx.controls;
     requires java.sql;
     requires junit;
+    requires org.testng;
 
     opens com.autocare to javafx.fxml;
 

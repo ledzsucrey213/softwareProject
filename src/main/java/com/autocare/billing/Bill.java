@@ -1,3 +1,5 @@
+package com.autocare.billing;
+
 import java.util.Date;
 
 public class Bill {

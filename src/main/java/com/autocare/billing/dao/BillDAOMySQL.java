@@ -1,6 +1,7 @@
 package com.autocare.billing.dao;
 
 import com.autocare.billing.Bill;
+import com.autocare.billing.*;
 import com.autocare.sql.SqlConnectionManager;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ public class BillDAOMySQL implements BillingDAO {
     @Override
     public void insertBill(Bill bill) throws SQLException {
         String query = "INSERT INTO bill (client_id, service_type, bill_date, bill_status, cost) "
-                       + "VALUES (?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?)";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
@@ -33,7 +34,7 @@ public class BillDAOMySQL implements BillingDAO {
     @Override
     public Bill loadBill(long billId) throws SQLException {
         String query = "SELECT id, client_id, service_type, bill_date, bill_status, cost "
-                       + "FROM bill WHERE id = ?";
+                + "FROM bill WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
@@ -45,12 +46,12 @@ public class BillDAOMySQL implements BillingDAO {
 
         if (resultSet.next()) {
             bill = new Bill(
-                resultSet.getLong("id"),
-                resultSet.getInt("client_id"),
-                resultSet.getString("service_type"),
-                resultSet.getDate("bill_date"),
-                resultSet.getString("bill_status"),
-                resultSet.getDouble("cost")
+                    resultSet.getLong("id"),
+                    resultSet.getInt("client_id"),
+                    resultSet.getString("service_type"),
+                    resultSet.getDate("bill_date"),
+                    resultSet.getString("bill_status"),
+                    resultSet.getDouble("cost")
             );
         }
 
@@ -76,7 +77,7 @@ public class BillDAOMySQL implements BillingDAO {
     @Override
     public void updateBill(Bill bill) throws SQLException {
         String query = "UPDATE bill SET client_id = ?, service_type = ?, bill_date = ?, "
-                       + "bill_status = ?, cost = ? WHERE id = ?";
+                + "bill_status = ?, cost = ? WHERE id = ?";
 
         Connection con = SqlConnectionManager.getConnection();
         PreparedStatement statement = con.prepareStatement(query);
@@ -104,12 +105,12 @@ public class BillDAOMySQL implements BillingDAO {
 
         while (resultSet.next()) {
             bills.add(new Bill(
-                resultSet.getLong("id"),
-                resultSet.getInt("client_id"),
-                resultSet.getString("service_type"),
-                resultSet.getDate("bill_date"),
-                resultSet.getString("bill_status"),
-                resultSet.getDouble("cost")
+                    resultSet.getLong("id"),
+                    resultSet.getInt("client_id"),
+                    resultSet.getString("service_type"),
+                    resultSet.getDate("bill_date"),
+                    resultSet.getString("bill_status"),
+                    resultSet.getDouble("cost")
             ));
         }
 
