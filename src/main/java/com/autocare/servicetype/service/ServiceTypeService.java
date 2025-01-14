@@ -27,6 +27,10 @@ public class ServiceTypeService {
         return true;
     }
     
+    public void deleteServiceType(ServiceType s) throws SQLException {
+        serviceTypeDAO.deleteServiceType(s.getId());
+    }
+    
     public List<ServiceType> getAllServiceTypes() throws SQLException {
         return serviceTypeDAO.loadAllServiceTypes();
     }
