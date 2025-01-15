@@ -17,23 +17,22 @@ import static javafx.application.Platform.exit;
 public class CustomerPage {
 
     public Scene createCustomerPage() {
-        // Create buttons
+        
         Button accessShopButton = new Button("Access Shop");
         Button scheduleRepairAppointmentButton = new Button("Schedule Repair Appointment");
         Button logoutButton = new Button("Logout");
 
-        // Style buttons (optional)
+        
         accessShopButton.setStyle("-fx-font-size: 14px;");
         scheduleRepairAppointmentButton.setStyle("-fx-font-size: 14px;");
         logoutButton.setStyle("-fx-font-size: 14px; -fx-background-color: red; -fx-text-fill: white;");
 
-        // Layout
+       
         VBox layout = new VBox(15, accessShopButton, scheduleRepairAppointmentButton , logoutButton);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
         layout.setStyle("-fx-background-color: #34495e;");
 
-        // Button actions (open as popups or navigate to new views as needed)
         accessShopButton.setOnAction(e -> {
             try {
                 // Ensure the user is logged in and retrieve the current user from the session
@@ -69,7 +68,7 @@ public class CustomerPage {
 
 
 
-        // Return the scene
+        
         return new Scene(layout, 600, 400);
     }
 }
